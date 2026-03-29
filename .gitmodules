@@ -1,0 +1,3 @@
+[submodule "libcss"]
+	path = libcss
+	url = git@github.com:Univers42/libcss.git
