@@ -1,17 +1,12 @@
-# Makefile - Landing Page Repo
+build-lib:
+	$(MAKE) -C app/src/lib/libcss build
 
-.PHONY: build-lib dev setup
+dev:
+	cd app && npm run dev
 
-# 1. Instala todo y prepara el submodulo
 setup:
 	git submodule update --init --recursive
-	npm install
-	make -C libcss build
+	cd app && npm install
+	$(MAKE) build-lib
 
-# 2. Compila la librería (usa el Makefile que tú mismo arreglaste)
-build-lib:
-	make -C libcss build
-
-# 3. Lanza el entorno de desarrollo de la landing
-dev: build-lib
-	npm run dev
+.PHONY: build-lib dev setup

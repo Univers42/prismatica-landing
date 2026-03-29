@@ -24,3 +24,12 @@ dist-ssr
 *.sw?
 
 libcss/dist
+
+app/node_modules/
+app/dist/
+app/src/lib/libcss/dist/
+
+app/node_modules/
+app/dist/
+app/src/lib/libcss/dist/
+.DS_Store
