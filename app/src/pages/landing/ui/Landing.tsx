@@ -11,7 +11,7 @@ import { Navbar } from '@/widgets/navbar';
 import { HeroSection } from '@/widgets/hero-section';
 import { RefractionSection } from '@/widgets/refraction-section';
 import { GalaxySection } from '@/widgets/galaxy-section';
-import SynthesisSection from '@/widgets/landing-sections/synthesis-section';
+import { SynthesisSection } from '@/widgets/synthesis-section';
 
 export interface MousePosition {
   readonly x: number;
