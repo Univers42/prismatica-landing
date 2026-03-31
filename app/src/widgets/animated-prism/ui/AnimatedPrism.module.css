@@ -1,0 +1,7 @@
+.canvasLayer {
+  position: relative;
+  z-index: 10;
+  display: block;
+  width: 320px;
+  height: 320px;
+}

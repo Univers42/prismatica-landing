@@ -2,9 +2,9 @@ import React, { useRef, useState, useCallback, useEffect } from 'react';
 import styles from './Landing.module.css';
 
 // Using FSD shared logic paths
-import StarField from '@/shared/ui/star-field';
-import LightCursor from '@/shared/ui/light-cursor';
-import ScrollProgress from '@/shared/ui/scroll-progress';
+import { StarField } from '@/shared/ui/star-field';
+import { LightCursor } from '@/shared/ui/light-cursor';
+import { ScrollProgress } from '@/shared/ui/scroll-progress';
 
 // Using FSD widget paths
 import { Navbar } from '@/widgets/navbar';

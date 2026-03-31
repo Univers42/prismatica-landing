@@ -1,0 +1,25 @@
+.cursorWrapper {
+  pointer-events: none;
+  position: fixed;
+  z-index: 50;
+  transition: none;
+  transform: translate(-50%, -50%);
+}
+
+.spectralHalo {
+  position: absolute;
+  border-radius: 9999px;
+  /* width/height/left/top/bg are injected dynamically */
+}
+
+.midGlowRing {
+  position: absolute;
+  border-radius: 9999px;
+   /* width/height/left/top/bg are injected dynamically */
+}
+
+.innerCore {
+  position: absolute;
+  border-radius: 9999px;
+   /* width/height/left/top/bg are injected dynamically */
+}

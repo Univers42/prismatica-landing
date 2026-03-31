@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { features } from '../model/features';
-import PrismCard from './PrismCard';
+import { PrismCard } from '@/widgets/prism-card';
 import styles from './RefractionSection.module.css';
 
 export interface RefractionSectionProps {

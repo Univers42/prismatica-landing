@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import AnimatedPrism from './AnimatedPrism';
+import { AnimatedPrism } from '@/widgets/animated-prism';
 import styles from './HeroSection.module.css';
 
 export interface MousePosition {
