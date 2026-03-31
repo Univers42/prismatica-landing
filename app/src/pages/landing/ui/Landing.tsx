@@ -1,4 +1,4 @@
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import styles from './Landing.module.css';
 
 // Using FSD shared logic paths
@@ -18,7 +18,7 @@ export interface MousePosition {
   readonly y: number;
 }
 
-export function Landing(): JSX.Element {
+export function Landing(): React.JSX.Element {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState<number>(0);
   const [mousePos, setMousePos] = useState<MousePosition>({ x: -500, y: -500 });

@@ -11,7 +11,7 @@ export interface LightCursorProps {
   readonly scrollProgress: number;
 }
 
-export function LightCursor({ pos, scrollProgress }: LightCursorProps): JSX.Element {
+export function LightCursor({ pos, scrollProgress }: LightCursorProps): React.JSX.Element {
   const boost = scrollProgress * 0.7;
   const haloSize = 500 + boost * 300;
   const coreSize = 100 + boost * 60;

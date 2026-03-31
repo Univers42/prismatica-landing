@@ -8,7 +8,7 @@ export interface RefractionSectionProps {
   readonly scrollProgress: number;
 }
 
-export function RefractionSection({ scrollProgress }: RefractionSectionProps): JSX.Element {
+export function RefractionSection({ scrollProgress }: RefractionSectionProps): React.JSX.Element {
   const brightness = Math.min(1, Math.max(0, (scrollProgress - 0.2) * 2));
 
   return (

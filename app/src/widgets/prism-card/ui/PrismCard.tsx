@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
+import { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { COLOR_VALUES } from '../model/constants';
+import { COLOR_VALUES, type LucideIcon } from '../model/constants';
 import styles from './PrismCard.module.css';
 
 export interface FeatureSpec {
@@ -20,7 +19,7 @@ export interface PrismCardProps {
   readonly index: number;
 }
 
-export function PrismCard({ title, subtitle, description, icon: Icon, color, specs, index }: PrismCardProps): JSX.Element {
+export function PrismCard({ title, subtitle, description, icon: Icon, color, specs, index }: PrismCardProps): React.JSX.Element {
   const [showSpecs, setShowSpecs] = useState(false);
   const [glowLevel, setGlowLevel] = useState(0);
   const glowRef = useRef<number>(0);

@@ -1,8 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import styles from './Navbar.module.css';
 
-export function Navbar(): JSX.Element {
+export function Navbar(): React.JSX.Element {
   return (
     <motion.nav
       initial={{ opacity: 0, y: -20 }}

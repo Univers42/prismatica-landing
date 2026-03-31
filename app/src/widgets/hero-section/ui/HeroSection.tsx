@@ -15,7 +15,7 @@ export interface HeroSectionProps {
   readonly scrollProgress?: number;
 }
 
-export function HeroSection({ onEnter, mousePos, scrollProgress }: HeroSectionProps): JSX.Element {
+export function HeroSection({ onEnter, mousePos }: HeroSectionProps): React.JSX.Element {
   const sectionRef = useRef<HTMLElement>(null);
   const [prismGlow, setPrismGlow] = useState<number>(0);
 

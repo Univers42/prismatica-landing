@@ -1,4 +1,11 @@
-import { LucideIcon } from 'lucide-react';
+import type { ComponentType, SVGProps } from 'react';
+
+export interface LucideProps extends SVGProps<SVGSVGElement> {
+  size?: string | number;
+  absoluteStrokeWidth?: boolean;
+}
+
+export type LucideIcon = ComponentType<LucideProps>;
 
 export interface ColorValue {
   readonly hex: string;

@@ -11,7 +11,7 @@ export interface AnimatedPrismProps {
   readonly glowIntensity: number;
 }
 
-export function AnimatedPrism({ mousePos, glowIntensity }: AnimatedPrismProps): JSX.Element {
+export function AnimatedPrism({ mousePos, glowIntensity }: AnimatedPrismProps): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef<number>(0);
   const rafRef = useRef<number | null>(null);

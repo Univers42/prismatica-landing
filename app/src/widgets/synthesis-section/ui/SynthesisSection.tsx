@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,7 +13,7 @@ export interface SynthesisSectionProps {
   readonly scrollProgress: number;
 }
 
-export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): JSX.Element {
+export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): React.JSX.Element {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
 

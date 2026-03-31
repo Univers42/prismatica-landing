@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { GALAXY_IMG, COLORS, GALAXY_STATS, GalaxyNode } from '../model/constants';
+import { GALAXY_IMG, COLORS, GALAXY_STATS } from '../model/constants';
+import type { GalaxyNode } from '../model/constants';
 import styles from './GalaxySection.module.css';
 
 export interface MousePosition {
@@ -13,7 +14,7 @@ export interface GalaxySectionProps {
   readonly scrollProgress: number;
 }
 
-export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps): JSX.Element {
+export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number | null>(null);
   const mousePosRef = useRef<MousePosition>(mousePos);

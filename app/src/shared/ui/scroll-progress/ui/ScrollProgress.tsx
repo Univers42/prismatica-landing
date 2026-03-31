@@ -6,7 +6,7 @@ export interface ScrollProgressProps {
   readonly progress: number;
 }
 
-export function ScrollProgress({ progress }: ScrollProgressProps): JSX.Element {
+export function ScrollProgress({ progress }: ScrollProgressProps): React.JSX.Element {
   const activeSectionIndex = Math.min(3, Math.floor(progress * 4));
 
   return (

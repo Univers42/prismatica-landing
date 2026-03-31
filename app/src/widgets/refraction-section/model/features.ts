@@ -1,4 +1,5 @@
-import { Database, Eye, BarChart3, Layers, Zap, Share2, LucideIcon } from 'lucide-react';
+import { Database, Eye, BarChart3, Layers2 as Layers, Zap, Share2 } from 'lucide-react';
+import type { LucideIcon } from '../../prism-card/model/constants';
 
 export interface FeatureSpec {
   readonly label: string;

@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useCallback } from 'react';
-import { NUM_STARS, StarNode, createStar } from '../model/constants';
+import { NUM_STARS, createStar } from '../model/constants';
+import type { StarNode } from '../model/constants';
 import styles from './StarField.module.css';
 
 export interface MousePosition {
@@ -12,7 +13,7 @@ export interface StarFieldProps {
   readonly scrollProgress: number;
 }
 
-export function StarField({ mousePos, scrollProgress }: StarFieldProps): JSX.Element {
+export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<StarNode[]>([]);
   const animRef = useRef<number | null>(null);
@@ -81,7 +82,6 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): JSX.Ele
 
       const stars = starsRef.current;
       const WAVE_RADIUS = 180;
-      const REPEL_RADIUS = 80; // NOTE: declared but unused in original logic
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
