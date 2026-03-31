@@ -1,0 +1,129 @@
+.sectionContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.opticalGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+}
+
+.ambientGlow {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.3s;
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 56rem;
+}
+
+.tagline {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.875rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted-foreground, #9ca3af);
+  margin-bottom: 2rem;
+}
+
+.headline {
+  font-size: 3rem;
+  font-family: var(--font-inter, sans-serif);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .headline {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .headline {
+    font-size: 6rem;
+  }
+}
+
+.textForeground {
+  color: var(--foreground, #fff);
+}
+
+.prismWrapper {
+  margin: 2.5rem 0;
+  position: relative;
+}
+
+.subText {
+  font-family: var(--font-mono, monospace);
+  font-size: 1rem;
+  color: var(--muted-foreground, #9ca3af);
+  max-width: 36rem;
+  line-height: 1.625;
+}
+
+@media (min-width: 768px) {
+  .subText {
+    font-size: 1.125rem;
+  }
+}
+
+.ctaButton {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(var(--foreground-rgb, 255, 255, 255), 0.1);
+  border-radius: 9999px;
+  background: transparent;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.ctaText {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(var(--foreground-rgb, 255, 255, 255), 0.7);
+  transition: color 0.3s;
+}
+
+.ctaButton:hover .ctaText {
+  color: var(--foreground, #fff);
+}
+
+.ctaIcon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--primary, #00e5ff);
+  transition: all 0.3s;
+}
+
+.ctaButton:hover .ctaIcon {
+  transform: translateX(0.25rem);
+}
+
+.spectrumLine {
+  margin-top: 4rem;
+  height: 1px;
+  width: 16rem;
+  transform-origin: center;
+}

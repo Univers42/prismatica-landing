@@ -1,0 +1,91 @@
+.navbarContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logoIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: relative;
+}
+
+.logoOuterBorder {
+  position: absolute;
+  inset: 0;
+  transform: rotate(45deg);
+  border: 1px solid rgba(var(--foreground-rgb, 255, 255, 255), 0.2);
+}
+
+.logoInnerFill {
+  position: absolute;
+  inset: 0.25rem;
+  transform: rotate(45deg);
+  background: linear-gradient(to bottom right, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+}
+
+.logoText {
+  font-family: var(--font-inter, sans-serif);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(var(--foreground-rgb, 255, 255, 255), 0.8);
+}
+
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .navLinks {
+    display: flex;
+  }
+}
+
+.navLinkItem {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(var(--muted-foreground-rgb, 156, 163, 175), 0.5);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.navLinkItem:hover {
+  color: var(--foreground, #fff);
+}
+
+.ctaButton {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid rgba(var(--foreground-rgb, 255, 255, 255), 0.1);
+  border-radius: 9999px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(var(--foreground-rgb, 255, 255, 255), 0.6);
+  background: transparent;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  color: var(--foreground, #fff);
+  border-color: rgba(var(--foreground-rgb, 255, 255, 255), 0.3);
+}

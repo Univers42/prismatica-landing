@@ -1,0 +1,21 @@
+.landingContainer {
+  background-color: var(--bg, #fff);
+  min-height: 100vh;
+  overflow: hidden;
+  cursor: none;
+}
+
+.scrollContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
