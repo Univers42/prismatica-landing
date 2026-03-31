@@ -10,7 +10,7 @@ import ScrollProgress from '@/shared/ui/scroll-progress';
 import { Navbar } from '@/widgets/navbar';
 import { HeroSection } from '@/widgets/hero-section';
 import { RefractionSection } from '@/widgets/refraction-section';
-import GalaxySection from '@/widgets/landing-sections/galaxy-section';
+import { GalaxySection } from '@/widgets/galaxy-section';
 import SynthesisSection from '@/widgets/landing-sections/synthesis-section';
 
 export interface MousePosition {
