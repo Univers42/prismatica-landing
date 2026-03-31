@@ -1,11 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Database, Eye, BarChart3, Layers, Zap, Share2 } from 'lucide-react';
-import PrismCard from './PrismCard';
+import { Database, Eye, BarChart3, Layers, Zap, Share2, LucideIcon } from 'lucide-react';
 
-const GLASS_IMG = 'https://media.base44.com/images/public/69cafcb4a2756f895662c19b/f1b7b58c5_generated_072fdd58.png';
+export interface FeatureSpec {
+  readonly label: string;
+  readonly detail: string;
+}
 
-const features = [
+export interface FeatureCardConfig {
+  readonly title: string;
+  readonly subtitle: string;
+  readonly description: string;
+  readonly icon: LucideIcon;
+  readonly color: string;
+  readonly specs: readonly FeatureSpec[];
+}
+
+export const features: readonly FeatureCardConfig[] = [
   {
     title: 'Database Builder',
     subtitle: 'Ingestion',
@@ -85,60 +94,3 @@ const features = [
     ],
   },
 ];
-
-export default function RefractionSection({ scrollProgress }) {
-  const brightness = Math.min(1, Math.max(0, (scrollProgress - 0.2) * 2));
-
-  return (
-    <section className="relative w-full flex flex-col items-center py-24 px-6">
-      <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-700"
-        style={{
-          background: `radial-gradient(ellipse at 50% 50%, 
-            rgba(0,229,255,${brightness * 0.04}) 0%, 
-            rgba(112,0,255,${brightness * 0.025}) 40%, 
-            transparent 70%)`,
-        }}
-      />
-
-      {/* Section header */}
-      <div className="relative z-10 text-center mb-16 max-w-2xl">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="font-mono text-xs tracking-[0.3em] uppercase text-primary mb-4"
-        >
-          The Refraction
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="text-4xl md:text-5xl font-inter font-semibold text-foreground leading-tight mb-6 chromatic-hover"
-          style={{ letterSpacing: '-0.03em' }}
-        >
-          Data through the prism
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="font-mono text-sm text-muted-foreground leading-relaxed"
-        >
-          Each facet of Prismatica transforms your raw data into a distinct, actionable spectrum.
-        </motion.p>
-      </div>
-
-      {/* Feature cards grid */}
-      <div className="relative z-10 w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {features.map((feature, i) => (
-          <PrismCard key={i} {...feature} index={i} />
-        ))}
-      </div>
-    </section>
-  );
-}

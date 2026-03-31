@@ -9,7 +9,7 @@ import ScrollProgress from '@/shared/ui/scroll-progress';
 // Using FSD widget paths
 import { Navbar } from '@/widgets/navbar';
 import { HeroSection } from '@/widgets/hero-section';
-import RefractionSection from '@/widgets/landing-sections/refraction-section';
+import { RefractionSection } from '@/widgets/refraction-section';
 import GalaxySection from '@/widgets/landing-sections/galaxy-section';
 import SynthesisSection from '@/widgets/landing-sections/synthesis-section';
 
