@@ -1,5 +1,4 @@
-import './index.css';
-import './App.css';
+import './scss/landing.scss';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { Landing } from '@/pages/landing';

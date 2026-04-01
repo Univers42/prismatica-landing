@@ -1,0 +1,76 @@
+// ── Section Layout ────────────────────────────────────────
+// Full-viewport section for the landing page scroll narrative.
+//
+// Usage:
+//   <section class="prisma-section">
+//     <h2 class="prisma-section__headline">Title</h2>
+//     <p class="prisma-section__subtext">Description</p>
+//   </section>
+
+.prisma-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+
+  &__headline {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    color: var(--prisma-landing-text-bright);
+    text-align: center;
+    max-width: 700px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  &__subtext {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--prisma-landing-text);
+    text-align: center;
+    max-width: 600px;
+    margin-top: 1.5rem;
+    line-height: 1.65;
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--prisma-spectral-cyan);
+    margin-bottom: 1rem;
+  }
+
+  // Ambient glow layer (positioned behind content)
+  &__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Content layer (above glow)
+  &__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // Grid for cards
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+}
