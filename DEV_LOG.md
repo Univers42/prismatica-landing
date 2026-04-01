@@ -4,6 +4,27 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-01 [Update 2]: Auth System State & TanStack Query Integration
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Establish the frontend foundational layer for OAuth 2.0 authentication based on the SQL schema (`schema.user.sql`), utilizing TanStack Query for session data fetching.
+
+### ✅ Key Achievements
+- **Mock Service Implementation**:
+    - Designed `mockAuthService.ts` simulating backend latency, token generation, and returning a user object structure derived directly from the `users` table schema.
+- **State Management (TanStack Query)**:
+    - Integrated `@tanstack/react-query` into the application.
+    - Built custom hooks (`useLogin`, `useUser`) mapping complex mutations to the UI.
+    - Implemented a scalable `AuthContext` to handle complex flows like `AWAITING_MFA`.
+- **UI Enhancements**:
+    - Wired `AuthForm.tsx` buttons to the mutation hook, adding disabled/loading states.
+    - Introduced the **"42"** intra authentication button to the UI following the established design tokens.
+- **Documentation**:
+    - Generated `AUTH_FLOW.md` detailing the relationship between `oauth_accounts` and `users`, and mapping out the future Multi-Factor Authentication backend integration.
+
+---
+
 ## 🗓️ 2026-04-01: Authentication Layer & Visual Consistency
 **Author: Antigravity (AI) & Sergio**
 

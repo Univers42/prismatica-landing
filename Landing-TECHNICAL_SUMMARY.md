@@ -74,24 +74,6 @@ import { HeroSection } from '@/widgets/hero-section'; // upward -> PROHIBIDO
 
 ---
 
-## 🛠️ **STACK TECNOLÓGICO**
-
-| **Categoría** | **Tecnología** | **Versión** | **Propósito** |
-|---|---|---|---|
-| **Runtime** | Node.js | LTS | Ejecución backend/build |
-| **Framework** | React | 19.2.4 | UI reactiva con hooks |
-| **Build Tool** | Vite | 8.0.1 | Bundler ultrarrápido (esdev/prod) |
-| **Lenguaje** | TypeScript | 5.9.3 | Tipado estricto (`strict: true`) |
-| **Styling** | Tailwind CSS | 4.2.2 | Utilidades CSS generadas |
-| **CSS-in-JS** | CSS Modules | Nativo | Scoping de estilos por componente |
-| **Animaciones** | Framer Motion | 12.38.0 | Animaciones declarativas |
-| **Routing** | React Router | 7.13.2 | Navegación SPA |
-| **Componentes UI** | Radix UI | 1.x | Dialog accesible primitivos |
-| **Iconos** | Lucide React | 1.7.0 | SVG icons tipados |
-| **Notificaciones** | Sonner | 2.0.7 | Toast system |
-| **Linting** | ESLint + TypeScript ESLint | 9.39.4 | Análisis estático |
-| **Class Utilities** | clsx + tailwind-merge | 2.x | Merge inteligente de clases |
-| **Data Fetching** | TanStack Query | 5.95.2 | Caching server state (prep) |
 
 ### **Configuración TypeScript Estricta**
 
