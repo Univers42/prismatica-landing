@@ -1,0 +1,43 @@
+.glassCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: var(--prisma-glass-bg);
+  border: 1px solid var(--prisma-glass-border);
+  backdrop-filter: blur(var(--prisma-glass-blur));
+  -webkit-backdrop-filter: blur(var(--prisma-glass-blur));
+  padding: 2rem;
+  transition: border-color 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.6s cubic-bezier(0.165, 0.84, 0.44, 1),
+              background 0.4s ease;
+  z-index: 10;
+}
+
+.glassCardIos {
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.45);
+  }
+}
+
+.glassReflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}

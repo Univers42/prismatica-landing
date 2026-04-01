@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog } from '@/components/atoms/Dialog/Dialog';
 import { COLOR_VALUES, type LucideIcon } from '../model/constants';
 import styles from './PrismCard.module.css';
 
@@ -151,26 +151,22 @@ export function PrismCard({ title, subtitle, description, icon: Icon, color, spe
         </div>
       </motion.div>
 
-      <Dialog open={showSpecs} onOpenChange={setShowSpecs}>
-        <DialogContent className="bg-card border-border/50 max-w-lg">
-          <DialogHeader>
-            <DialogTitle className="font-inter text-xl text-foreground flex items-center gap-3">
-              <Icon style={{ color: hex }} className={styles.iconElement} />
-              {title}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-3 mt-2">
-            {specs?.map((spec, i) => (
-              <div key={i} className={styles.specRow}>
-                <span className={styles.specBullet} style={{ color: hex }}>▸</span>
-                <div>
-                  <p className={styles.specLabel}>{spec.label}</p>
-                  <p className={styles.specDetail}>{spec.detail}</p>
-                </div>
+      <Dialog 
+        open={showSpecs} 
+        onClose={() => setShowSpecs(false)} 
+        title={title}
+      >
+        <div className="space-y-3 mt-2">
+          {specs?.map((spec, i) => (
+            <div key={i} className={styles.specRow}>
+              <span className={styles.specBullet} style={{ color: hex }}>▸</span>
+              <div>
+                <p className={styles.specLabel}>{spec.label}</p>
+                <p className={styles.specDetail}>{spec.detail}</p>
               </div>
-            ))}
-          </div>
-        </DialogContent>
+            </div>
+          ))}
+        </div>
       </Dialog>
     </>
   );

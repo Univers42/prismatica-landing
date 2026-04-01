@@ -1,0 +1,112 @@
+@use '@/scss/_landing-tokens' as *;
+
+.loginPage {
+  display: flex;
+  min-height: 100vh;
+  background: var(--prisma-landing-bg);
+  color: var(--prisma-landing-text);
+  overflow: hidden;
+}
+
+.leftSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 5, 7, 1) 0%,
+    rgba(5, 5, 7, 0.95) 100%
+  );
+  box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    box-shadow: none;
+    background: var(--prisma-landing-bg);
+  }
+}
+
+.logoContainer {
+  margin-bottom: auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--prisma-landing-text-bright);
+}
+
+.logoIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--prisma-spectral-cyan);
+  border-radius: 4px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+.formWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.footer {
+  margin-top: auto;
+  font-size: 0.75rem;
+  color: var(--prisma-landing-text-muted);
+  text-align: center;
+}
+
+.rightSide {
+  flex: 1.2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.visualContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loginStarField {
+  width: 100%;
+  height: 100%;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  pointer-events: none;
+}
+
+.centerGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: background 0.1s ease-out;
+}

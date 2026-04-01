@@ -1,0 +1,93 @@
+import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { GlassCard } from '@/shared/ui/glass-card';
+import styles from './AuthForm.module.scss';
+
+export function AuthForm(): React.JSX.Element {
+  const [isLogin, setIsLogin] = useState(true);
+
+  const toggleMode = () => setIsLogin(!isLogin);
+
+  return (
+    <div className={styles.authContainer}>
+      <AnimatePresence mode="wait">
+        <GlassCard 
+          key={isLogin ? 'login' : 'signup'}
+          className={styles.authCard}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <div className={styles.header}>
+            <h2 className={styles.title}>{isLogin ? 'Welcome Back' : 'Create Account'}</h2>
+            <p className={styles.subtitle}>
+              {isLogin 
+                ? 'Enter your credentials to access the spectrum' 
+                : 'Join Prismatica and start your journey'}
+            </p>
+          </div>
+
+          <div className={styles.socialButtons}>
+            <button className={styles.socialButton}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.041-1.416-4.041-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+              <span>GitHub</span>
+            </button>
+            <button className={styles.socialButton}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.908 3.152-1.808 4.056-1.144 1.144-2.936 2.4-6.032 2.4-4.864 0-8.544-3.936-8.544-8.8s3.68-8.8 8.544-8.8c2.624 0 4.568 1.032 5.968 2.344l2.32-2.32c-1.976-1.888-4.544-3.344-8.288-3.344-6.864 0-12.704 5.48-12.704 12.32s5.84 12.32 12.704 12.32c3.576 0 6.384-1.216 8.784-3.832 2.456-2.456 3.24-5.832 3.24-8.504 0-.712-.064-1.408-.184-2.04h-11.832z"/>
+              </svg>
+              <span>Google</span>
+            </button>
+          </div>
+
+          <div className={styles.divider}>
+            <span>or continue with email</span>
+          </div>
+
+          <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+            {!isLogin && (
+              <div className={styles.inputGroup}>
+                <User className={styles.inputIcon} size={18} />
+                <input type="text" placeholder="Full Name" required />
+              </div>
+            )}
+            
+            <div className={styles.inputGroup}>
+              <Mail className={styles.inputIcon} size={18} />
+              <input type="email" placeholder="Email Address" required />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <Lock className={styles.inputIcon} size={18} />
+              <input type="password" placeholder="Password" required />
+            </div>
+
+            {isLogin && (
+              <div className={styles.forgotPassword}>
+                <a href="#">Forgot password?</a>
+              </div>
+            )}
+
+            <button type="submit" className={styles.submitButton}>
+              <span>{isLogin ? 'Sign In' : 'Get Started'}</span>
+              <ArrowRight size={18} />
+            </button>
+          </form>
+
+          <div className={styles.footer}>
+            <p>
+              {isLogin ? "Don't have an account?" : "Already have an account?"}
+              <button onClick={toggleMode} className={styles.toggleButton}>
+                {isLogin ? 'Sign Up' : 'Log In'}
+              </button>
+            </p>
+          </div>
+        </GlassCard>
+      </AnimatePresence>
+    </div>
+  );
+}

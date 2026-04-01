@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { AnimatedPrism } from '@/widgets/animated-prism';
 
@@ -14,7 +15,8 @@ export interface HeroSectionProps {
   readonly scrollProgress?: number;
 }
 
-export function HeroSection({ onEnter, mousePos }: HeroSectionProps): React.JSX.Element {
+export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLElement>(null);
   const [prismGlow, setPrismGlow] = useState(0);
 
@@ -95,7 +97,7 @@ export function HeroSection({ onEnter, mousePos }: HeroSectionProps): React.JSX.
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2 }}
-          onClick={onEnter}
+          onClick={() => navigate('/login')}
           whileHover={{ scale: 1.04 }}
           className="hero__cta"
           style={{

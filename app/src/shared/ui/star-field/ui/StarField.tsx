@@ -11,9 +11,10 @@ export interface MousePosition {
 export interface StarFieldProps {
   readonly mousePos: MousePosition;
   readonly scrollProgress: number;
+  readonly className?: string;
 }
 
-export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.JSX.Element {
+export function StarField({ mousePos, scrollProgress, className }: StarFieldProps): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<StarNode[]>([]);
   const animRef = useRef<number | null>(null);
@@ -28,8 +29,9 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
   const init = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    
+    const w = canvas.offsetWidth || window.innerWidth;
+    const h = canvas.offsetHeight || window.innerHeight;
     canvas.width = w;
     canvas.height = h;
 
@@ -41,7 +43,6 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
       return s;
     });
 
-    // Pre-compute connections (within distance)
     for (let i = 0; i < stars.length; i++) {
       for (let j = i + 1; j < stars.length; j++) {
         const dist = Math.hypot(stars[i].x - stars[j].x, stars[i].y - stars[j].y);
@@ -72,12 +73,12 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
       const frame = frameRef.current;
       const w = canvas.width;
       const h = canvas.height;
-      const { x: mx, y: my } = mousePosRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const localMx = mousePosRef.current.x - rect.left;
+      const localMy = mousePosRef.current.y - rect.top;
       const sp = scrollRef.current;
 
-      // Global brightness boost from scroll progress
       const globalBoost = sp * 0.6;
-
       ctx.clearRect(0, 0, w, h);
 
       const stars = starsRef.current;
@@ -85,22 +86,18 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
 
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-
-        // Mouse wave effect — ripple displacement
-        const dx = s.baseX - mx;
-        const dy = s.baseY - my;
+        const dx = s.baseX - localMx;
+        const dy = s.baseY - localMy;
         const dist = Math.hypot(dx, dy);
 
         if (dist < WAVE_RADIUS) {
           const force = (1 - dist / WAVE_RADIUS);
-          // Gentle push away + oscillation
           const angle = Math.atan2(dy, dx);
           const pushStr = force * force * 30;
           s.vx += Math.cos(angle) * pushStr * 0.08;
           s.vy += Math.sin(angle) * pushStr * 0.08;
         }
 
-        // Spring back to base position
         s.vx += (s.baseX - s.x) * 0.04;
         s.vy += (s.baseY - s.y) * 0.04;
         s.vx *= 0.82;
@@ -108,24 +105,19 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
         s.x += s.vx;
         s.y += s.vy;
 
-        // Twinkle
         const twinkle = Math.sin(frame * s.twinkleSpeed + s.twinkleOffset) * 0.5 + 0.5;
-
-        // Alpha boost near cursor
         let alphaBoost = 0;
         if (dist < WAVE_RADIUS) {
           alphaBoost = (1 - dist / WAVE_RADIUS) * 0.6;
         }
         const finalAlpha = Math.min(1, s.baseAlpha + twinkle * 0.15 + alphaBoost + globalBoost * 0.4);
 
-        // Draw star
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.radius + (dist < WAVE_RADIUS ? (1 - dist / WAVE_RADIUS) * 2 : 0), 0, Math.PI * 2);
         ctx.fillStyle = s.color;
         ctx.globalAlpha = finalAlpha;
         ctx.fill();
 
-        // Glow ring near cursor
         if (dist < WAVE_RADIUS * 0.6) {
           const glowStr = (1 - dist / (WAVE_RADIUS * 0.6));
           const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.radius * 6 + glowStr * 8);
@@ -139,14 +131,13 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
         }
       }
 
-      // Draw connections
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
         for (const j of s.connections) {
           const t = stars[j];
           const midX = (s.x + t.x) / 2;
           const midY = (s.y + t.y) / 2;
-          const distToMouse = Math.hypot(midX - mx, midY - my);
+          const distToMouse = Math.hypot(midX - localMx, midY - localMy);
           const connDist = Math.hypot(s.x - t.x, s.y - t.y);
           const baseFade = 1 - connDist / 140;
           const mouseBoost = distToMouse < 200 ? (1 - distToMouse / 200) * 0.5 : 0;
@@ -182,7 +173,7 @@ export function StarField({ mousePos, scrollProgress }: StarFieldProps): React.J
   return (
     <canvas
       ref={canvasRef}
-      className={styles.canvasLayer}
+      className={`${styles.canvasLayer} ${className || ''}`}
     />
   );
 }
