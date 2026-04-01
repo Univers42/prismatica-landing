@@ -1,3 +1,5 @@
+# Authentication & Authorization (Auth) Flow
+
 ## 🧪 How to Demonstrate the Auth Flow (Mock)
 
 The current implementation includes a `mockAuthService` that replicates the database schema and security behaviors. You can demonstrate the following flows to the team directly on the `/login` page:
@@ -84,3 +86,62 @@ When a user logs in (via Password or OAuth):
 3. Backend validates the code against the decrypted `mfa_secret` for the user.
 4. On success, Backend invalidates the temp token and issues the final session token (inserted into `user_sessions`).
 5. Frontend transitions to `AUTHENTICATED` state and routes to the dashboard.
+
+---
+
+## 🔌 Backend Integration Contract (Production)
+
+To replace the `mockAuthService` with actual network calls, the backend must implement the following REST API structure and data formats.
+
+### 📍 Production Endpoints
+
+| Method | Endpoint | Description | Expected Payload |
+|---|---|---|---|
+| **GET** | `/auth/login/:provider` | Redirects the user to the OAuth provider (Google, GitHub, 42). | - |
+| **GET** | `/auth/callback/:provider` | Handles the OAuth code/state. Sets `user_sessions` and returns token/user. | `code`, `state` (query params) |
+| **GET** | `/auth/me` | Validates session token and returns current user info. | `Authorization: Bearer <token>` |
+| **POST** | `/auth/mfa/verify` | Completes authentication if MFA is enabled. | `{ mfaToken: string, otp_code: string }` |
+| **POST** | `/auth/logout` | Revokes the session in the `user_sessions` table. | - |
+
+### 📄 Data Interfaces (Shared)
+
+The backend responses MUST match the following interface (already implemented in the frontend):
+
+```typescript
+export interface User {
+  id: string; // UUID
+  email: string;
+  username: string;
+  display_name: string | null;
+  avatar_url: string | null;
+  is_active: boolean;
+  mfa_enabled: boolean;
+  status: 'online' | 'offline' | 'busy' | 'away';
+}
+
+export interface AuthResponse {
+  token: string;
+  user: User;
+  requiresMfa: boolean;
+}
+```
+
+### 🔐 2FA Protocol (Security Handshake)
+
+When a primary authentication factor (Password/OAuth) succeeds but the user has `mfa_enabled = true`:
+
+1.  **Backend Response**: `202 Accepted` or `206 Partial Content` with a partial payload:
+    ```json
+    {
+      "requiresMfa": true,
+      "mfaToken": "short_lived_temp_jwt_token",
+      "user": { ...partial user info... }
+    }
+    ```
+2.  **Frontend State**: The `AuthContext` will switch to `AWAITING_MFA` and show the OTP form.
+3.  **Completion**: Upon receiving the 6-digit code, the frontend calls `POST /auth/mfa/verify`. If valid, the backend issues the permanent session token and updates `last_login_at` in the `users` table.
+
+### 🛡️ Session Management
+- **Persistence**: Store session hashes in the `user_sessions` table.
+- **Expiry**: Tokens should respect the `expires_at` column.
+- **Client Storage**: The frontend currently uses `localStorage` for the token, but it is ready to handle `HttpOnly` cookies if preferred by the backend team (ensure `withCredentials: true` is set in CORS if using cookies).

@@ -12,7 +12,8 @@ Prismatica Landing está construida con un enfoque en el rendimiento extremo, un
 - **Core**: [React 19](https://react.dev/) + [Vite 8](https://vitejs.dev/) + [TypeScript 5.9](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) + [CSS Modules](https://github.com/css-modules/css-modules)
 - **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
-- **Data Fetching**: [TanStack Query 5](https://tanstack.com/query/latest)
+- **Auth**: OAuth 2.0 (Google, GitHub, 42) + Multi-Factor Authentication (MFA)
+- **Data Fetching**: [TanStack Query 5](https://tanstack.com/query/latest) (Server State Management)
 - **Icons**: [Lucide React](https://lucide.dev/)
 
 ---
@@ -25,8 +26,8 @@ El proyecto sigue una fusión de **Feature-Sliced Design (FSD)** y **Atomic Desi
 1.  **App**: Configuración global, proveedores y estilos base (en proceso de migración a `src/app`).
 2.  **Pages**: Composición de la página `landing`.
 3.  **Widgets**: Secciones complejas e independientes (ej. `HeroSection`, `Navbar`, `AnimatedPrism`).
-4.  **Features**: Lógica de interacción y funcionalidades de negocio.
-5.  **Entities**: Entidades de dominio y modelos de datos.
+4.  **Features**: Lógica de interacción y autenticación (OAuth 2.0). 
+5.  **Entities**: Modelos de usuario y esquemas de sesión.
 6.  **Shared**: Componentes UI atómicos, utilidades y librerías externas.
 
 ### Reglas de Importación

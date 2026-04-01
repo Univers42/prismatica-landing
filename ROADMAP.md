@@ -9,9 +9,9 @@ El proyecto está en una fase de transición hacia una estructura **FSD (Feature
 ### Estado de Capas (FSD)
 - ✅ **Pages**: Implementada la página `landing`.
 - ✅ **Widgets**: Secciones complejas como `hero-section`, `navbar`, y `animated-prism`.
+- ✅ **Features / Entities**: Implementada lógica de autenticación (OAuth 2.0 / MFA) y esquema de usuario.
 - ⚠️ **Shared**: Contiene `ui`, pero existen componentes fuera en `src/components`.
 - ❌ **App**: `App.tsx` y `main.tsx` se encuentran incorrectamente en la raíz de `src/`.
-- ❌ **Features / Entities**: Aún no se han segmentado lógicas de dominio o interacciones de usuario en estas capas.
 
 ### Stack Tecnológico
 - **Core**: React 19 + Vite 8 + TypeScript 5.9.
