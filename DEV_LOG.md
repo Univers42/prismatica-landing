@@ -17,6 +17,10 @@ Establish the authentication entry point and align the Login page's visual langu
 - **Visual Consistency & UX**: 
     - Synchronized `StarField` and `LightCursor` across the entire login view.
     - Optimized star density (40%) and added translucent `backdrop-filter` for better readability.
+- **Layout Transition Smoothing**: 
+    - Implemented a **Gradient Bridge** (20vw) at the center of the login layout to remove the abrupt 50% visual cut.
+    - Added progressive `backdrop-filter` to the transition zone for a professional depth effect.
+    - Preserved mobile responsiveness with media queries, ensuring the improvement only targets tablet and desktop views.
 - **Shared UI Improvements**:
     - Created **GlassCard** (iOS-style glassmorphism component).
     - Refactored **StarField** to be container-aware and responsive.
