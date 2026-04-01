@@ -4,25 +4,25 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
-## 🗓️ 2026-04-01: Authentication Layer & FSD Refinement
+## 🗓️ 2026-04-01: Authentication Layer & Visual Consistency
 **Author: Antigravity (AI) & Sergio**
 
 ### 🎯 Objective
-Establish the authentication entry point and implement the first complex route (`/login`) following strict FSD (Feature-Sliced Design) principles.
+Establish the authentication entry point and align the Login page's visual language with the core identity of the platform.
 
 ### ✅ Key Achievements
-- **New Layer: features/auth**: 
-    - Created `AuthForm` component with smooth Login/Signup toggle.
-    - Integrated social login buttons (Google & GitHub) with custom vector assets.
-- **New Page: pages/login**: 
-    - Implemented a 50/50 split-screen layout.
-    - Right panel features an interactive `StarField` container.
-- **Shared UI Enhancements**:
-    - **GlassCard Component**: Created a reusable iOS-style glassmorphism component for the platform's UI elements.
-    - **StarField Refactor**: Decoupled the starfield from global window events, allowing it to be contained and interactive within specific UI panels.
+- **Auth Implementation**: 
+    - Created `features/auth` with `AuthForm` (Login/Signup toggle, Google/GitHub social integration).
+    - Built `pages/login` with high-performance split-screen layout.
+- **Visual Consistency & UX**: 
+    - Synchronized `StarField` and `LightCursor` across the entire login view.
+    - Optimized star density (40%) and added translucent `backdrop-filter` for better readability.
+- **Shared UI Improvements**:
+    - Created **GlassCard** (iOS-style glassmorphism component).
+    - Refactored **StarField** to be container-aware and responsive.
 - **Structural Fixes**:
-    - Resolved critical build-time errors in `PrismCard.tsx` related to missing dialog components.
-    - Updated navigation flow: "Enter the Spectrum" now links directly to the Login page.
+    - Resolved critical build-time errors in `PrismCard.tsx`.
+    - Integrated navigation flow from Hero Section to Auth.
 
 ---
 

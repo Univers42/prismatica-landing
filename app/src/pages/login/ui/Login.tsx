@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { StarField } from '@/shared/ui/star-field';
+import { LightCursor } from '@/shared/ui/light-cursor';
 import { AuthForm } from '@/features/auth';
 import styles from './Login.module.scss';
 
@@ -43,6 +44,15 @@ export function Login(): React.JSX.Element {
 
   return (
     <div className={styles.loginPage}>
+      {/* Global Background Layers */}
+      <StarField 
+        mousePos={mousePos} 
+        scrollProgress={0} 
+        density={0.4} 
+        className={styles.loginStarField} 
+      />
+      <LightCursor pos={mousePos} scrollProgress={0} />
+
       {/* Left side: Content & Form */}
       <div className={styles.leftSide}>
         <motion.div 
@@ -66,10 +76,9 @@ export function Login(): React.JSX.Element {
         </div>
       </div>
 
-      {/* Right side: Dynamic Background */}
+      {/* Right side: Visual Panel (now transparent to show global stars) */}
       <div className={styles.rightSide}>
         <div className={styles.visualContainer}>
-          <StarField mousePos={mousePos} scrollProgress={0} className={styles.loginStarField} />
           <div className={styles.vignette} />
           
           <motion.div 

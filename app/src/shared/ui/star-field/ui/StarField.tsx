@@ -12,9 +12,15 @@ export interface StarFieldProps {
   readonly mousePos: MousePosition;
   readonly scrollProgress: number;
   readonly className?: string;
+  readonly density?: number; // 0 to 1
 }
 
-export function StarField({ mousePos, scrollProgress, className }: StarFieldProps): React.JSX.Element {
+export function StarField({ 
+  mousePos, 
+  scrollProgress, 
+  className, 
+  density = 1 
+}: StarFieldProps): React.JSX.Element {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<StarNode[]>([]);
   const animRef = useRef<number | null>(null);
@@ -35,7 +41,8 @@ export function StarField({ mousePos, scrollProgress, className }: StarFieldProp
     canvas.width = w;
     canvas.height = h;
 
-    const stars = Array.from({ length: NUM_STARS }, (_, i) => {
+    const numStars = Math.floor(NUM_STARS * density);
+    const stars = Array.from({ length: numStars }, (_, i) => {
       const s = createStar(w, h, i);
       s.baseX = s.x;
       s.baseY = s.y;
