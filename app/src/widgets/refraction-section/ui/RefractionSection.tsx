@@ -115,7 +115,7 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
           transition={{ duration: 1, delay: 0.2 }}
           className="prisma-section__headline chromatic-hover"
         >
-          Data through the prism
+          One model. Infinite perspectives.
         </motion.h2>
 
         <motion.p
@@ -125,7 +125,8 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
           transition={{ duration: 1, delay: 0.3 }}
           className="prisma-section__subtext"
         >
-          Each facet of Prismatica transforms your raw data into a distinct, actionable spectrum.
+          Your data exists. Info is scattered across the dark -formless, invisible -
+          waiting to be shaped. Now you can see it.
         </motion.p>
       </div>
 

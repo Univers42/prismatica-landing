@@ -88,7 +88,7 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
               color: `rgba(160,160,180,${0.6 + brightness * 0.4})`,
             }}
           >
-            Ready to transform your data from scattered points of light into a focused beam of clarity?
+            Ready for data clarity?
           </p>
         </motion.div>
 

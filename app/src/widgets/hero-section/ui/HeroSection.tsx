@@ -65,20 +65,7 @@ export function HeroSection({ onEnter, mousePos }: HeroSectionProps): React.JSX.
           transition={{ duration: 1.2, delay: 0.5 }}
           className="hero__headline chromatic-hover"
         >
-          <span>From the </span>
-          <span
-            style={{
-              color: `rgba(242,242,242,${0.25 + gi * 0.75})`,
-              textShadow:
-                gi > 0.1
-                  ? `0 0 ${40 * gi}px rgba(0,229,255,${gi * 0.6}), 0 0 ${80 * gi}px rgba(112,0,255,${gi * 0.3})`
-                  : 'none',
-              transition: 'color 0.3s, text-shadow 0.3s',
-            }}
-          >
-            darkness
-          </span>
-          <span> of raw data</span>
+          <span>  PRISMATICA </span>
         </motion.h1>
 
         {/* Prism */}
@@ -98,8 +85,9 @@ export function HeroSection({ onEnter, mousePos }: HeroSectionProps): React.JSX.
           transition={{ duration: 1.2, delay: 1.4 }}
           className="hero__subtext"
         >
-          A prism that refracts your raw ideas into a manageable spectrum
-          — revealing connections you never knew existed.
+          Prism your ideas:
+          watch the whole spectrum unfold at will
+          and reveal the power of your light
         </motion.p>
 
         {/* CTA */}

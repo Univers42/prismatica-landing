@@ -207,7 +207,7 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
           transition={{ duration: 1, delay: 0.2 }}
           className={styles.headline}
         >
-          Connections you<br />never knew existed
+          A universe of connections like you<br />never saw before
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
@@ -216,7 +216,7 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
           transition={{ duration: 1, delay: 0.4 }}
           className={styles.description}
         >
-          Move your cursor through the field — watch as data nodes light up and ripple, revealing the hidden web of your universe.
+          When your raw data passes through the prism of structure, insights illuminate, and what was invisible becomes your competitive advantage.
         </motion.p>
 
         {/* Stats */}
