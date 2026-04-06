@@ -1,9 +1,11 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, lazy, Suspense } from 'react';
 import { Navbar } from '@/widgets/navbar';
 import { HeroSection } from '@/widgets/hero-section';
-import { RefractionSection } from '@/widgets/refraction-section';
-import { GalaxySection } from '@/widgets/galaxy-section';
-import { SynthesisSection } from '@/widgets/synthesis-section';
+
+// Lazy load widgets that are below the fold or resource-heavy
+const RefractionSection = lazy(() => import('@/widgets/refraction-section').then(m => ({ default: m.RefractionSection })));
+const GalaxySection = lazy(() => import('@/widgets/galaxy-section').then(m => ({ default: m.GalaxySection })));
+const SynthesisSection = lazy(() => import('@/widgets/synthesis-section').then(m => ({ default: m.SynthesisSection })));
 
 export interface MousePosition {
   readonly x: number;
@@ -28,9 +30,13 @@ export function LandingPage({ scrollProgress, mousePos }: LandingPageProps): Rea
 
       <div ref={scrollRef} className="landing-scroll">
         <HeroSection onEnter={handleEnter} scrollProgress={scrollProgress} mousePos={mousePos} />
-        <RefractionSection scrollProgress={scrollProgress} />
-        <GalaxySection scrollProgress={scrollProgress} mousePos={mousePos} />
-        <SynthesisSection scrollProgress={scrollProgress} />
+        
+        {/* Wrap below-the-fold sections in Suspense */}
+        <Suspense fallback={<div style={{ height: '100vh' }} />}>
+          <RefractionSection scrollProgress={scrollProgress} />
+          <GalaxySection scrollProgress={scrollProgress} mousePos={mousePos} />
+          <SynthesisSection scrollProgress={scrollProgress} />
+        </Suspense>
       </div>
     </div>
   );

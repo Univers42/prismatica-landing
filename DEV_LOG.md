@@ -4,6 +4,24 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-06 [Performance]: Code-Splitting & Lazy Loading Implementation
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Optimize the application's First Contentful Paint (FCP) and initial load time by deferring the execution of heavy, non-critical Javascript until it's needed by the user.
+
+### ✅ Key Achievements
+- **Route-Level Splitting (`App.tsx`)**:
+    - Disconnected static imports for `LandingPage` and `LoginPage` in favor of `React.lazy()`.
+    - Wrapped the central React Router `<Routes>` block in a `<Suspense>` boundary.
+- **Component-Level Splitting (`LandingPage.tsx` & `HeroSection.tsx`)**:
+    - Identified and isolated `AnimatedPrism` as a heavy canvas dependency, deferred its load to prioritize Hero text rendering.
+    - Segmented "below the fold" sections (`GalaxySection`, `SynthesisSection`, `RefractionSection`) using lazy loading.
+- **Transitional UI (`LoadingFallback`)**:
+    - Created a sleek, chromatic `LoadingFallback` atom component seamlessly integrating with the platform aesthetics to ensure a smooth UX while chunks are loaded.
+- **Measurable Performance Gains**:
+    - Confirmed via production build the generation of independent JS chunks, drastically reducing the monolithic `index.js` weight.
+
 ## 🗓️ 2026-04-06 [Performance]: LazyMotion Integration & Animation Optimization
 **Author: Antigravity (AI) & Sergio**
 

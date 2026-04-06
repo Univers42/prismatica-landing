@@ -29,10 +29,9 @@ Para mantener la experiencia "Premium" y "State of the Art" de Prismatica, se pr
 Migración exitosa a `LazyMotion` y el componente `m`, cargando solo `domAnimation`.
 - **Resultado**: Reducción del bundle inicial de JS en ~46kB y optimización del Time to Interactive (TTI).
 
-### 2. Code-Splitting a Nivel de Ruta y Componentes Pesados
-`App.tsx` importa la página `Landing` de forma estática. 
-- **Acción**: Utilizar `React.lazy()` para la carga de páginas y widgets pesados (especialmente aquellos con efectos visuales complejos como `AnimatedPrism`).
-- **Impacto**: Menor First Contentful Paint (FCP) al cargar solo el esqueleto inicial y el Hero.
+### ✅ 2. Code-Splitting a Nivel de Ruta y Componentes Pesados
+Implementación exitosa de `React.lazy()` y `<Suspense>` tanto a nivel de rutas como de secciones visuales pesadas.
+- **Resultado**: Separación del código en 'chunks' independientes, priorizando el contenido "Above the Fold" (Hero y Navbar), lo que reduce drásticamente el First Contentful Paint (FCP).
 
 ### 3. Pipeline de Optimización de Assets Automático
 El proyecto maneja efectos visuales "Premium" que dependen de assets.

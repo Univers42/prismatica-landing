@@ -1,15 +1,17 @@
 import '@/shared/styles/landing.scss';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import { useAuthActions } from '@/features/auth';
-import { LightCursor, ScrollProgress, StarField } from '@/shared/ui';
-import { LandingPage } from '@/pages/landing';
-import { LoginPage } from '@/pages/login';
+import { LightCursor, ScrollProgress, StarField, LoadingFallback } from '@/shared/ui';
 import { useMousePosition } from '@/shared/lib/hooks/useMousePosition';
 import { useScrollProgress } from '@/shared/lib/hooks/useScrollProgress';
+
+// Lazy load pages for code-splitting
+const LandingPage = lazy(() => import('@/pages/landing').then(m => ({ default: m.LandingPage })));
+const LoginPage = lazy(() => import('@/pages/login').then(m => ({ default: m.LoginPage })));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,11 +43,13 @@ function App(): React.JSX.Element {
           {/* Toast notifications */}
           <Toaster position="top-center" richColors />
 
-          {/* Routes routing */}
-          <Routes>
-            <Route path="/" element={<LandingPage scrollProgress={scrollProgress} mousePos={mousePos} />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
+          {/* Routes routing with Suspense for lazy loading */}
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<LandingPage scrollProgress={scrollProgress} mousePos={mousePos} />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </Suspense>
         </LazyMotion>
       </Router>
     </QueryClientProvider>

@@ -1,4 +1,5 @@
 export * from './atoms/Dialog';
+export * from './atoms/loading-fallback';
 export * from './glass-card';
 export * from './light-cursor';
 export * from './scroll-progress';

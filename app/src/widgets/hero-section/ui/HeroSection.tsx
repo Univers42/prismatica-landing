@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { m } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import { AnimatedPrism } from '@/widgets/animated-prism';
 import { Section, SectionGlow, SectionContent } from '@/shared/ui';
 import styles from './HeroSection.module.scss';
+
+// Lazy load the prism canvas component
+const AnimatedPrism = lazy(() => import('@/widgets/animated-prism').then(m => ({ default: m.AnimatedPrism })));
 
 export interface MousePosition {
   readonly x: number;
@@ -68,14 +70,16 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           <span>  PRISMATICA </span>
         </m.h1>
 
-        {/* Prism */}
+        {/* Prism Layer with Suspense */}
         <m.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 1 }}
           className={styles.prismWrapper}
         >
-          <AnimatedPrism mousePos={mousePos} glowIntensity={gi} />
+          <Suspense fallback={<div className={styles.prismPlaceholder} />}>
+            <AnimatedPrism mousePos={mousePos} glowIntensity={gi} />
+          </Suspense>
         </m.div>
 
         {/* Subtext */}
