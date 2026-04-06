@@ -4,6 +4,24 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-06 [Architecture]: Pages Layer Strict FSD Compliance
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Achieve 100% strict Feature-Sliced Design (FSD) compliance across the `pages/` layer (Landing and Login) by completely decoupling Logic, Models, and Styles from the presentation UI.
+
+### ✅ Key Achievements
+- **Landing Page Slice (`pages/landing/`)**:
+    - Extracted TypeScript interfaces to `model/types.ts`.
+    - Removed imperative UI-scrolling logic and extracted it to `lib/useLandingNavigation.ts`.
+    - Purged legacy global `.landing-container` CSS and scoped it to `ui/LandingPage.module.scss`.
+- **Login Page Slice (`pages/login/`)**:
+    - Eliminated duplicate global UI instances (`<StarField>` / `<LightCursor>`) by resolving collisions with the `GlobalUI` orchestrator.
+    - Stripped out 30+ lines of duplicate `requestAnimationFrame` and mouse-lerp tracking in favor of receiving context from the `AppRouter`.
+    - Centralized types into `model/types.ts`.
+- **API Standardization**:
+    - Both `landing` and `login` now hide their internal implementation details behind an `index.ts` public interface document with strict JSDoc definitions.
+
 ## 🗓️ 2026-04-06 [Architecture]: App Orchestrator Fragmentation & Onboarding
 **Author: Antigravity (AI) & Sergio**
 

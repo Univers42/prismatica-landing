@@ -41,5 +41,9 @@ Integración de `vite-plugin-image-optimizer` y migración de assets externos (C
 
 ## 🗺️ Próximas Metas (Arquitectura & UX)
 
-1. **Interactividad Avanzada**: Refinar comportamientos de `StarField` y `GalaxySection` ante eventos de scroll profundos.
-3. **Integración de Backend Real**: Sustituir mocks por endpoints productivos.
+1. **[En Progreso] Refactorización FSD Estricta**:
+    - ✅ **Capa App**: Fragmentación completada (Proveedores, UI Global, Router).
+    - ✅ **Capa Pages**: Extracción completada (Modelos, Lógica, CSS Modules).
+    - ⏳ **Capa Widgets**: (Siguiente paso). Resolver advertencias de linter (ej: `HeroSection` useEffect states) y asegurar que cumplen la estricta encapsulación FSD (ui/model/lib).
+2. **Interactividad Avanzada**: Refinar comportamientos de `StarField` y `GalaxySection` ante eventos de scroll profundos una vez limpios.
+3. **Integración de Backend Real**: Sustituir mocks (`mockAuthService`) por enrutamiento final al backend en la capa Features.
