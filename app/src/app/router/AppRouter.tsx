@@ -32,7 +32,7 @@ export function AppRouter({ mousePos, scrollProgress }: AppRouterProps): React.J
           />
           <Route 
             path="/login" 
-            element={<LoginPage />} 
+            element={<LoginPage mousePos={mousePos} />} 
           />
         </Routes>
       </Suspense>

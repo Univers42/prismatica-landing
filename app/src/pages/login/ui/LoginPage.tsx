@@ -1,57 +1,29 @@
-import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { m } from 'framer-motion';
-import { StarField } from '@/shared/ui/star-field';
-import { LightCursor } from '@/shared/ui/light-cursor';
+
+// FSD Models
+import type { LoginPageProps } from '../model/types';
+
+// Features (FSD layer below Pages)
 import { AuthForm } from '@/features/auth';
+
+// Presentation Styles
 import styles from './Login.module.scss';
 
-interface MousePosition {
-  x: number;
-  y: number;
-}
-
-export function LoginPage(): React.JSX.Element {
-  const [mousePos, setMousePos] = useState<MousePosition>({ x: -500, y: -500 });
-  const rawMouseRef = useRef<MousePosition>({ x: -500, y: -500 });
-  const smoothMouseRef = useRef<MousePosition>({ x: -500, y: -500 });
-  const rafRef = useRef<number | null>(null);
-
-  // Smooth mouse tracking (same as landing for consistency)
-  useEffect(() => {
-    const handle = (e: MouseEvent) => {
-      rawMouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener('mousemove', handle);
-
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-    const tick = () => {
-      const raw = rawMouseRef.current;
-      const smooth = smoothMouseRef.current;
-      const nx = lerp(smooth.x, raw.x, 0.1);
-      const ny = lerp(smooth.y, raw.y, 0.1);
-      smoothMouseRef.current = { x: nx, y: ny };
-      setMousePos({ x: nx, y: ny });
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener('mousemove', handle);
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
+/**
+ * 🏔️ Login Page (View)
+ * 
+ * Strict 'Page' slice orchestrator for authentication.
+ * Uses global interactions (mousePos) from the App Orchestrator.
+ */
+export function LoginPage({ mousePos }: LoginPageProps): React.JSX.Element {
   return (
     <div className={styles.loginPage}>
-      {/* Global Background Layers */}
-      <StarField 
-        mousePos={mousePos} 
-        scrollProgress={0} 
-        density={0.4} 
-        className={styles.loginStarField} 
-      />
-      <LightCursor pos={mousePos} scrollProgress={0} />
+      {/* 
+        Note: Global Background Layers (StarField, LightCursor) 
+        are deliberately omitted here. They are rendered globally by 
+        <GlobalUI /> in the root App.tsx orchestrator to avoid duplication.
+      */}
 
       {/* Left side: Content & Form */}
       <div className={styles.leftSide}>
@@ -76,7 +48,7 @@ export function LoginPage(): React.JSX.Element {
         </div>
       </div>
 
-      {/* Right side: Visual Panel (now transparent to show global stars) */}
+      {/* Right side: Visual Panel */}
       <div className={styles.rightSide}>
         <div className={styles.visualContainer}>
           <div className={styles.vignette} />
