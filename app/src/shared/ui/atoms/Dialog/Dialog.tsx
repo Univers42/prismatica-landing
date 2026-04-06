@@ -1,4 +1,11 @@
-import { useEffect, useCallback, useRef, type ReactNode } from 'react';
+import { 
+  useEffect, 
+  useCallback, 
+  useRef, 
+  type ReactNode, 
+  type MouseEvent as ReactMouseEvent, 
+  type KeyboardEvent as ReactKeyboardEvent 
+} from 'react';
 import styles from './Dialog.module.scss';
 
 export interface DialogProps {
@@ -31,9 +38,12 @@ export function Dialog({ open, onClose, title, size = 'md', children }: DialogPr
     };
   }, [open, handleKeyDown]);
 
-  // Close on backdrop click
-  const handleOverlayClick = useCallback(
-    (e: React.MouseEvent) => {
+  // Unified backdrop logic (closes when clicking/pressing Enter/Space outside the content)
+  const handleBackdropAction = useCallback(
+    (e: ReactMouseEvent | ReactKeyboardEvent) => {
+      // For keyboard, only trigger on Enter or Space
+      if ('key' in e && e.key !== 'Enter' && e.key !== ' ') return;
+
       if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
         onClose();
       }
@@ -44,16 +54,27 @@ export function Dialog({ open, onClose, title, size = 'md', children }: DialogPr
   if (!open) return null;
 
   return (
-    <div className={styles.overlay} onClick={handleOverlayClick}>
+    <div 
+      className={styles.overlay} 
+      onClick={handleBackdropAction}
+      onKeyDown={handleBackdropAction}
+      role="button"
+      tabIndex={-1}
+      aria-label="Close dialog overlay"
+    >
       <div
         ref={contentRef}
         className={`${styles.dialog} ${styles[size]}`}
         role="dialog"
         aria-modal="true"
-        aria-label={title}
+        aria-labelledby="dialog-title"
       >
         <div className={styles.header}>
-          {title && <h3 className={styles.title}>{title}</h3>}
+          {title && (
+            <h3 id="dialog-title" className={styles.title}>
+              {title}
+            </h3>
+          )}
           <button
             className={styles.close}
             onClick={onClose}
