@@ -1,0 +1,41 @@
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LoadingFallback } from '@/shared/ui';
+
+// Code-Splitted Pages
+// Instead of bundling all pages together, Vite will create separate JS chunks
+// for LandingPage and LoginPage, significantly decreasing initial load time.
+const LandingPage = lazy(() => import('@/pages/landing').then(m => ({ default: m.LandingPage })));
+const LoginPage = lazy(() => import('@/pages/login').then(m => ({ default: m.LoginPage })));
+
+export interface AppRouterProps {
+  /** Environmental mouse position passed down to the Landing experience */
+  readonly mousePos: { x: number; y: number };
+  /** Scroll progression state passed down to synchronize internal animations */
+  readonly scrollProgress: number;
+}
+
+/**
+ * 🗺️ App Router
+ * 
+ * Central routing layer. Handles URL traversal, code-splitting resolution, 
+ * and fallback states during chunk loading.
+ */
+export function AppRouter({ mousePos, scrollProgress }: AppRouterProps): React.JSX.Element {
+  return (
+    <Router>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route 
+            path="/" 
+            element={<LandingPage scrollProgress={scrollProgress} mousePos={mousePos} />} 
+          />
+          <Route 
+            path="/login" 
+            element={<LoginPage />} 
+          />
+        </Routes>
+      </Suspense>
+    </Router>
+  );
+}

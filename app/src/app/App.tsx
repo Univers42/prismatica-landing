@@ -1,29 +1,26 @@
-import '@/shared/styles/landing.scss';
-import { useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'sonner';
-import { LazyMotion, domAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 import { useAuthActions } from '@/features/auth';
-import { LightCursor, ScrollProgress, StarField, LoadingFallback } from '@/shared/ui';
 import { useMousePosition } from '@/shared/lib/hooks/useMousePosition';
 import { useScrollProgress } from '@/shared/lib/hooks/useScrollProgress';
 
-// Lazy load pages for code-splitting
-const LandingPage = lazy(() => import('@/pages/landing').then(m => ({ default: m.LandingPage })));
-const LoginPage = lazy(() => import('@/pages/login').then(m => ({ default: m.LoginPage })));
+// Fragmented Structural Layers
+import { AppProviders } from './providers/AppProviders';
+import { GlobalUI } from './ui/GlobalUI';
+import { AppRouter } from './router/AppRouter';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      refetchOnWindowFocus: false,
-    },
-  },
-});
-
+/**
+ * 💠 Prismatica Orchestrator (App.tsx)
+ * 
+ * This is the beating heart of the application structure.
+ * Following Feature-Sliced Design (FSD) and SOLID principles, this file 
+ * does NO heavy lifting. It acts purely as a macro-orchestrator linking 
+ * Contexts, Global Visuals, and Routing logic together.
+ */
 function App(): React.JSX.Element {
+  // 1. Bootstrapping Logic initialization (e.g., checking active sessions)
   const { initialize } = useAuthActions();
+  
+  // 2. Global Environmental State
   const mousePos = useMousePosition();
   const scrollProgress = useScrollProgress();
 
@@ -32,27 +29,13 @@ function App(): React.JSX.Element {
   }, [initialize]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <LazyMotion features={domAnimation} strict>
-          {/* Global UI background & interaction layers */}
-          <StarField mousePos={mousePos} scrollProgress={scrollProgress} />
-          <LightCursor pos={mousePos} scrollProgress={scrollProgress} />
-          <ScrollProgress progress={scrollProgress} />
-          
-          {/* Toast notifications */}
-          <Toaster position="top-center" richColors />
-
-          {/* Routes routing with Suspense for lazy loading */}
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<LandingPage scrollProgress={scrollProgress} mousePos={mousePos} />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Routes>
-          </Suspense>
-        </LazyMotion>
-      </Router>
-    </QueryClientProvider>
+    <AppProviders>
+      {/* Visual background layers & toasts isolated from DOM routing */}
+      <GlobalUI mousePos={mousePos} scrollProgress={scrollProgress} />
+      
+      {/* Route traversal and lazy-loading boundaries */}
+      <AppRouter mousePos={mousePos} scrollProgress={scrollProgress} />
+    </AppProviders>
   );
 }
 

@@ -1,0 +1,34 @@
+import React from 'react';
+import { Toaster } from 'sonner';
+import { LightCursor, ScrollProgress, StarField } from '@/shared/ui';
+
+export interface GlobalUIProps {
+  /** The current global mouse position tracked by the environment */
+  readonly mousePos: { x: number; y: number };
+  /** The current page scroll progress (0 to 1) */
+  readonly scrollProgress: number;
+}
+
+/**
+ * 🌌 Global UI Layer
+ * 
+ * Orchestrates visual elements that exist globally and independently 
+ * of the core document flow or route structure.
+ * 
+ * @param {GlobalUIProps} props - Synchronization streams for ambient reactivity
+ */
+export function GlobalUI({ mousePos, scrollProgress }: GlobalUIProps): React.JSX.Element {
+  return (
+    <>
+      {/* Immersive background & cursor tracking */}
+      <StarField mousePos={mousePos} scrollProgress={scrollProgress} />
+      <LightCursor pos={mousePos} scrollProgress={scrollProgress} />
+      
+      {/* Global Reading/Scroll indicator */}
+      <ScrollProgress progress={scrollProgress} />
+      
+      {/* Toast notifications (Flash messages, Success, Errors) */}
+      <Toaster position="top-center" richColors />
+    </>
+  );
+}

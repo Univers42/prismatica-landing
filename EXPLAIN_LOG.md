@@ -1,0 +1,69 @@
+# 🧭 Prismatica Onboarding: Day 1 Navigation Guide
+
+Welcome aboard! If you're reading this, you're looking at the core orchestration layer of Prismatica. We've built this application with an extreme focus on legibility and the **Feature-Sliced Design (FSD)** methodology.
+
+This document serves as your map to understand how the application boots up and how its macro-structure is assembled.
+
+---
+
+## 🚀 1. The Entry Point (`main.tsx`)
+
+Everything begins at `app/src/app/main.tsx`.
+
+This file has exactly **one** responsibility: bridging the browser's DOM with our React environment.
+- **CSS Injection**: It imports the global LibCSS framework first, followed by our custom `landing.scss` themes, establishing the styling cascade.
+- **Strict Mode**: It wraps our `App` in `<StrictMode>`, which helps us catch side-effects during development (by double-invoking renders) without impacting production.
+
+> *You will almost never need to touch this file.*
+
+---
+
+## 🎼 2. The Master Orchestrator (`App.tsx`)
+
+In many projects, `App.tsx` becomes a messy dumping ground for routing, contexts, and global hooks. In Prismatica, it is an **Orchestrator**. 
+
+If you open `App.tsx`, you'll notice it's barely 20 lines of code. It doesn't *do* the work; it delegates it to three fundamental pillars:
+
+### Pillar A: `<AppProviders>`
+Located in `app/providers/AppProviders.tsx`.
+This component wraps the application in its vital Contexts:
+1. **React Query (`QueryClientProvider`)**: Handles all our server-state caching (like User data). We set a 5-minute stale-time by default so data feels snappy.
+2. **Framer Motion (`LazyMotion`)**: Injects our animation engine. We use `domAnimation` and `strict` mode to prevent our bundle size from bloating. **Always use `<m.div>` instead of `<motion.div>` in this project!**
+
+### Pillar B: `<GlobalUI>`
+Located in `app/ui/GlobalUI.tsx`.
+Certain elements of our app "float" above the pages:
+- The ambient `<StarField>`.
+- The interactive `<LightCursor>`.
+- The reading `<ScrollProgress>` bar.
+- The `<Toaster>` for global notifications.
+This layer manages these visual elements independently so they don't re-render or conflict with the main routing logic.
+
+### Pillar C: `<AppRouter>`
+Located in `app/router/AppRouter.tsx`.
+This manages URLs and Code-Splitting. 
+Instead of loading the `LandingPage` and `LoginPage` massive JavaScript blobs all at once, we use `React.lazy()`. The browser downloads only what it needs, when it needs it.
+- **Suspense**: Wraps the routes so that while the user is downloading a new page chunk, they see our premium `<LoadingFallback>` animation.
+
+---
+
+## 🔗 How Data Flows
+
+1. The `GlobalUI` and `AppRouter` both need to know the user's `mousePos` and `scrollProgress` to power the cool ambient effects.
+2. `App.tsx` initializes these hooks (`useMousePosition` and `useScrollProgress`).
+3. It passes them down as basic props. This ensures we only set up our `window.addEventListener('mousemove')` **once** globally, passing the synchronized data stream down to the entire stack.
+
+---
+
+## 📂 FSD Cheatsheet
+
+Where does the rest of the code live?
+- `pages/`: The full-screen views (like Login or Landing). They compose widgets.
+- `widgets/`: Independent, complex sections (like the `Hero` or the `GalaxySection`).
+- `features/`: Interactive domain logic (like `auth/` handling logins).
+- `entities/`: Data models and structures.
+- `shared/`: UI atoms (`GlassCard`), global SCSS tokens, and utility hooks.
+
+**The Golden Rule**: Layers can only import from layers *below* them. (`pages/` can import a `widget`, but a `widget` can never import a `page`).
+
+Welcome to Prismatica. Happy coding! 💠

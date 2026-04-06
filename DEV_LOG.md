@@ -4,6 +4,23 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-06 [Architecture]: App Orchestrator Fragmentation & Onboarding
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Dismantle the monolithic `App.tsx` into highly legibile, single-responsibility modules to vastly improve developer onboarding and code maintainability, adhering strictly to FSD structural logic.
+
+### ✅ Key Achievements
+- **Structural Fragmentation**:
+    - Extracted all global context and animation logic into `app/providers/AppProviders.tsx`.
+    - Segregated ambient visual layers (StarField, Cursor, Toaster) into `app/ui/GlobalUI.tsx`.
+    - Isolated React Router and Suspense code-splitting logic into `app/router/AppRouter.tsx`.
+- **The Master Orchestrator**:
+    - Refactored `App.tsx` down to under 20 lines of purely declarative, well-commented composition logic.
+    - Embellished `main.tsx` and `index.ts` with deep pedagogical JSDoc comments explaining CSS cascades and strict mode behaviors.
+- **Onboarding Guide**:
+    - Created [EXPLAIN_LOG.md](./EXPLAIN_LOG.md) as a foundational "Day 1" tutorial to map out the application's boot sequence for future developers.
+
 ## 🗓️ 2026-04-06 [Performance]: Automatic Asset Optimization Pipeline
 **Author: Antigravity (AI) & Sergio**
 
