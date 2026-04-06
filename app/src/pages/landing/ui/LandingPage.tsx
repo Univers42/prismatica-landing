@@ -13,6 +13,9 @@ const RefractionSection = lazy(() => import('@/widgets/refraction-section').then
 const GalaxySection = lazy(() => import('@/widgets/galaxy-section').then(m => ({ default: m.GalaxySection })));
 const SynthesisSection = lazy(() => import('@/widgets/synthesis-section').then(m => ({ default: m.SynthesisSection })));
 
+// Presentation Styles
+import styles from './LandingPage.module.scss';
+
 /**
  * 🏔️ Landing Page (View)
  * 
@@ -26,10 +29,10 @@ export function LandingPage({ scrollProgress, mousePos }: LandingPageProps): Rea
   const { handleEnter } = useLandingNavigation();
 
   return (
-    <div className="landing-container">
+    <div className={styles.container}>
       <Navbar />
 
-      <div ref={scrollRef} className="landing-scroll">
+      <div ref={scrollRef} className={styles.scroll}>
         <HeroSection onEnter={handleEnter} scrollProgress={scrollProgress} mousePos={mousePos} />
         
         {/* Wrap below-the-fold sections in Suspense */}

@@ -65,6 +65,7 @@ Inside `app/src/pages/landing`, you won't see a single `Landing.tsx` free-floati
 - **`model/types.ts`**: Holds all the TypeScript interfaces (`LandingPageProps`, `MousePosition`). By separating these, we avoid UI files bloated with 50 lines of typings.
 - **`lib/useLandingNavigation.ts`**: Custom hooks. Even a 3-line function like `handleEnter` (which scrolls the page) is extracted here. Why? Because UI files should be purely declarative. If it *does* something imperative, it belongs in a hook.
 - **`ui/LandingPage.tsx`**: The orchestrator of visuals. It imports the model, imports the hook, and lays out the JSX. It contains zero complex logic.
+- **`ui/LandingPage.module.scss`**: CSS Modules! We don't dump component-specific layout classes into a global stylesheet. We scope them locally here so they remain conflict-free and highly portable.
 
 This specific pattern (API -> Model -> Logic -> UI) scales beautifully and is enforced across the entire application for widgets, features, and entities.
 

@@ -1,0 +1,19 @@
+.container {
+  min-height: 100vh;
+  overflow: hidden;
+  cursor: none; // Replaced by LightCursor overlay from GlobalUI
+  background: var(--prisma-landing-bg);
+}
+
+.scroll {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; // Firefox
+
+  &::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Edge
+  }
+}

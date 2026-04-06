@@ -31,26 +31,7 @@ body {
 }
 
 // ── 4. Landing-specific utility classes ──
-
-.landing-container {
-  min-height: 100vh;
-  overflow: hidden;
-  cursor: none; // Replaced by LightCursor
-  background: var(--prisma-landing-bg);
-}
-
-.landing-scroll {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
+// (Moved to component-level CSS Modules where possible)
 
 // ── 5. Shared animation classes ──
 
