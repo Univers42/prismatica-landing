@@ -1,3 +1,5 @@
+import { safeRandom } from '@/shared/lib/crypto';
+
 export type AuthProvider = 'google' | 'github' | '42';
 
 export interface User {
@@ -58,7 +60,7 @@ export const mockAuthService = {
    */
   async loginWithOAuth(provider: AuthProvider): Promise<AuthResponse> {
     // Simulate network latency (800ms to 1500ms)
-    await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 700));
+    await new Promise(resolve => setTimeout(resolve, 800 + safeRandom() * 700));
     
     // Simulate finding/creating user from oauth_accounts linking
     const user = MOCK_USERS[provider];

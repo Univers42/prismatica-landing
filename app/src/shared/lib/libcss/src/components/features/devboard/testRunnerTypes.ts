@@ -1,8 +1,4 @@
-/**
- * Test Runner Service
- * API service to run and fetch backend test results
- * Adapted for libcss — uses configurable API layer
- */
+import { safeRandom } from '@/shared/lib/crypto';
 
 const API_BASE = '';
 
@@ -219,7 +215,7 @@ export function parseJestOutput(output: string): TestResult[] {
  */
 export function getMockTestResults(): RunTestsResponse {
   // Random slight variations in timing to simulate real tests
-  const randomDuration = (base: number) => Math.max(1, base + Math.floor(Math.random() * 20) - 10);
+  const randomDuration = (base: number) => Math.max(1, base + Math.floor(safeRandom() * 20) - 10);
 
   // Create timestamp to track when this run was generated
   const runId = Date.now();

@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { COLORS } from '../model/constants';
 import type { GalaxyNode } from '../model/constants';
 import type { MousePosition } from '../model/types';
+import { safeRandom } from '@/shared/lib/crypto';
 
 /**
  * 🌌 Galaxy Canvas Physics Engine
@@ -30,19 +31,19 @@ export function useGalaxyCanvas(mousePos: MousePosition) {
     canvas.height = h;
 
     const nodes: GalaxyNode[] = Array.from({ length: 80 }, (_, i) => {
-      const x = Math.random() * w;
-      const y = Math.random() * h;
+      const x = safeRandom() * w;
+      const y = safeRandom() * h;
       return {
         id: i,
         x, y,
         baseX: x, baseY: y,
         vx: 0, vy: 0,
-        r: Math.random() * 3 + 1.5,
+        r: safeRandom() * 3 + 1.5,
         color: COLORS[i % COLORS.length],
-        alpha: Math.random() * 0.5 + 0.3,
+        alpha: safeRandom() * 0.5 + 0.3,
         glowLevel: 0,
-        phase: Math.random() * Math.PI * 2,
-        speed: Math.random() * 0.008 + 0.003,
+        phase: safeRandom() * Math.PI * 2,
+        speed: safeRandom() * 0.008 + 0.003,
         connections: []
       };
     });
