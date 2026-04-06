@@ -7,17 +7,17 @@ Este documento resume la arquitectura actual de **Prismatica Landing** y define 
 El proyecto está en una fase de transición hacia una estructura **FSD (Feature-Sliced Design)** estricta combinada con **Atomic Design**.
 
 ### Estado de Capas (FSD)
-- ✅ **Pages**: Implementada la página `landing`.
-- ✅ **Widgets**: Secciones complejas como `hero-section`, `navbar`, y `animated-prism`.
-- ✅ **Features / Entities**: Implementada lógica de autenticación (OAuth 2.0 / MFA) y esquema de usuario.
-- ⚠️ **Shared**: Contiene `ui`, pero existen componentes fuera en `src/components`.
-- ❌ **App**: `App.tsx` y `main.tsx` se encuentran incorrectamente en la raíz de `src/`.
+- ✅ **App**: Raíz de la aplicación organizada en `src/app`.
+- ✅ **Pages**: Configuración de `landing` y `login` completas.
+- ✅ **Widgets**: Secciones complejas (`hero`, `galaxy`, `navbar`, etc.) refactorizadas.
+- ✅ **Features / Entities**: Lógica de autenticación centralizada en Zustand.
+- ✅ **Shared**: UI atómica, hooks globales y utilidades consolidadas.
 
 ### Stack Tecnológico
 - **Core**: React 19 + Vite 8 + TypeScript 5.9.
-- **Styling**: Tailwind CSS 4 + CSS Modules.
+- **Styling**: SCSS + CSS Modules (Zero Tailwind).
+- **State**: Zustand (Global) + TanStack Query (Server).
 - **Animations**: Framer Motion 12.
-- **Data**: TanStack Query (preparado para fetch de esquemas polimórficos).
 
 ---
 
@@ -42,8 +42,8 @@ El proyecto maneja efectos visuales "Premium" que dependen de assets.
 
 ---
 
-## 🗺️ Próximos Pasos (Arquitectura)
+## 🗺️ Próximas Metas (Arquitectura & UX)
 
-1. **Refactorización de Raíz**: Mover `App.tsx`, `main.tsx` y estilos globales a `src/app/`.
-2. **Centralización de Shared**: Migrar `src/components/*` y `src/lib/*` a `src/shared/ui/` y `src/shared/lib/` respectivamente.
-3. **Zustand Store**: Inicializar el store global siguiendo el patrón de un store por slice para la gestión de estados polimórficos.
+1. **Optimización de Assets**: Configurar pipeline para formatos modernos (WebP/AVIF).
+2. **Interactividad Avanzada**: Refinar comportamientos de `StarField` y `GalaxySection` ante eventos de scroll profundos.
+3. **Integración de Backend Real**: Sustituir mocks por endpoints productivos.

@@ -4,6 +4,28 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-06 [Refactor]: Architectural Consolidation & State Migration
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Perform a comprehensive refactor of the application to move from local Context providers to a centralized state management with Zustand, while refining the FSD structure and visual system.
+
+### ✅ Key Achievements
+- **State Management Migration**:
+    - Replaced `AuthContext` with a robust **Zustand Store** (`useAuthStore`).
+    - Implemented fine-grained selectors for optimized re-renders.
+- **Hook Centralization**:
+    - Created `shared/lib/hooks` to consolidate common logic (e.g., `useMousePosition`).
+    - Standardized internal FSD imports to follow the **Public API (index.ts)** pattern across all slices.
+- **Styling System Overhaul**:
+    - Migration from Tailwind CSS to **Pure SCSS + CSS Modules**.
+    - Consolidated global tokens in `shared/styles/landing.scss`.
+- **Directory Clean-up**:
+    - Successfully moved the root `App.tsx` and `main.tsx` into the `src/app/` layer, completing the FSD structural vision.
+    - Standardized all UI components to use the `ui/` subdirectory inside their respective slices.
+
+---
+
 ## 🗓️ 2026-04-01 [Consolidation]: Merge to `develop` & Backend Handshake Readiness
 **Author: Antigravity (AI) & Sergio**
 

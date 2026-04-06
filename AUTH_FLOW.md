@@ -34,7 +34,7 @@ The current implementation includes a `mockAuthService` that replicates the data
 
 Prismatica utilizes a strict Single Source of Truth for identity and authentication, guided by the 5NF-compliant PostgreSQL schema (`schema.user.sql`). 
 
-All authentication states are managed via TanStack Query on the frontend, reacting to token changes and caching session states for instant UI updates.
+All authentication states are managed via **TanStack Query** for server state and **Zustand** for global client state, ensuring instant UI updates and robust session handling.
 
 ### Data Mapping: `oauth_accounts` → `users`
 
@@ -54,8 +54,8 @@ A user can authenticate via multiple providers (GitHub, Google, 42). The system 
 The `schema.user.sql` anticipates Multi-Factor Authentication through the `mfa_enabled` and `mfa_secret` columns in the `users` table.
 
 ### Current Implementation (Frontend)
-The frontend `AuthContext` now supports an `AWAITING_MFA` state. 
-- When an OAuth login succeeds, if the returned mock user has `mfa_enabled: true` (e.g., Google mock profile), the UI Context state changes to `AWAITING_MFA` rather than `AUTHENTICATED`.
+The frontend now utilizes **Zustand (`useAuthStore`)** to manage the `AWAITING_MFA` and `AUTHENTICATED` states globally.
+- When an OAuth login succeeds, if the returned mock user has `mfa_enabled: true` (e.g., Google mock profile), the store state changes to `AWAITING_MFA` via `actions.loginState`.
 
 ### Future Implementation (Backend & Activation)
 
@@ -78,14 +78,14 @@ When a user logs in (via Password or OAuth):
    - Backend *does not* create the final `user_sessions` row yet.
    - It generates a short-lived, restricted JWT (e.g., `role: mfa_pending`) or securely caches the attempt in Redis.
    - It responds with HTTP 206 (Partial Content) or a specific JSON flag: `{ requiresMfa: true, mfaToken: 'temp_token' }`.
-4. Frontend intercepts this response, sets the `AuthContext` status to `AWAITING_MFA`, and renders the OTP form.
+4. Frontend intercepts this response, sets the `useAuthStore` status to `AWAITING_MFA`, and renders the OTP form.
 
 #### Step 3: MFA Resolution
 1. User enters the 6-digit TOTP code.
 2. Frontend sends `POST /auth/mfa/verify` carrying the `mfaToken` and the `otp_code`.
 3. Backend validates the code against the decrypted `mfa_secret` for the user.
 4. On success, Backend invalidates the temp token and issues the final session token (inserted into `user_sessions`).
-5. Frontend transitions to `AUTHENTICATED` state and routes to the dashboard.
+5. Frontend transitions to `AUTHENTICATED` state in the store and routes to the dashboard.
 
 ---
 
@@ -138,7 +138,7 @@ When a primary authentication factor (Password/OAuth) succeeds but the user has 
       "user": { ...partial user info... }
     }
     ```
-2.  **Frontend State**: The `AuthContext` will switch to `AWAITING_MFA` and show the OTP form.
+2.  **Frontend State**: The store status will switch to `AWAITING_MFA` and show the OTP form.
 3.  **Completion**: Upon receiving the 6-digit code, the frontend calls `POST /auth/mfa/verify`. If valid, the backend issues the permanent session token and updates `last_login_at` in the `users` table.
 
 ### 🛡️ Session Management

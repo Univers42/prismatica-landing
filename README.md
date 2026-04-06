@@ -10,8 +10,9 @@ Prismatica Landing está construida con un enfoque en el rendimiento extremo, un
 
 ### Stack Tecnológico (Cutting-Edge)
 - **Core**: [React 19](https://react.dev/) + [Vite 8](https://vitejs.dev/) + [TypeScript 5.9](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) + [CSS Modules](https://github.com/css-modules/css-modules)
+- **Styling**: [Sass (SCSS)](https://sass-lang.com/) + [CSS Modules](https://github.com/css-modules/css-modules)
 - **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
+- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/) (Client) + [TanStack Query 5](https://tanstack.com/query/latest) (Server)
 - **Auth**: OAuth 2.0 (Google, GitHub, 42) + Multi-Factor Authentication (MFA)
 - **Data Fetching**: [TanStack Query 5](https://tanstack.com/query/latest) (Server State Management)
 - **Icons**: [Lucide React](https://lucide.dev/)
@@ -43,13 +44,12 @@ Basado en la revisión general definida en [ROADMAP.md](./ROADMAP.md):
 
 ### ⚡ Próximas Mejoras de Rendimiento
 1.  **LazyMotion**: Implementación de `LazyMotion` para reducir el bundle inicial del motor de animaciones.
-2.  **Code-Splitting**: Carga diferida de páginas y widgets visualmente densos mediante `React.lazy`.
-3.  **Asset Optimization**: Pipeline automático para servir imágenes en formatos modernos (WebP/AVIF).
+2.  **Asset Optimization**: Pipeline automático para servir imágenes en formatos modernos (WebP/AVIF).
 
-### 🛠️ Tareas de Arquitectura Pendientes
-- [ ] Refactorizar la raíz de `src/` moviendo `App.tsx` y `main.tsx` a `src/app/`.
-- [ ] Centralizar componentes huérfanos en `src/shared/ui/`.
-- [ ] Implementar la gestión de estado global con **Zustand** (un store por slice).
+### 🛠️ Tareas de Arquitectura Completadas
+- [x] Migración total a arquitectura **FSD (Feature-Sliced Design)**.
+- [x] Implementación de **Zustand** para la gestión de estado global.
+- [x] Centralización de lógica en **Shared Hooks** (ej. `useMousePosition`).
 
 ---
 
