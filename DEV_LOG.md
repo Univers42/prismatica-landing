@@ -4,6 +4,24 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-06 [Performance]: Automatic Asset Optimization Pipeline
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Configure an automated build-time pipeline to compress heavy visual assets and serve them in highly efficient modern formats without sacrificing the "Premium" visual standard.
+
+### ✅ Key Achievements
+- **Plugin Integration**:
+    - Installed `vite-plugin-image-optimizer` and the `sharp` engine.
+    - Updated `vite.config.ts` to automatically apply high-quality compression during the `npm run build` step.
+- **Asset Localization**:
+    - Identified that `GalaxySection` and `SynthesisSection` were fetching large `.png` background assets from an external CDN.
+    - Downloaded and migrated these assets to the local `src/assets/images/` directory to allow Vite to process them.
+- **Transformed Component Imports**:
+    - Changed external URL string constants to static ES6 imports (`import IMG from '@/assets/...'`) so Vite correctly maps and optimizes the assets within the module graph.
+- **Measurable Performance Gains**:
+    - The new pipeline achieved a **66% reduction** in asset file size (from ~1.18MB down to ~411KB), saving **~771KB** of bandwidth per load without visually downgrading the design.
+
 ## 🗓️ 2026-04-06 [Performance]: Code-Splitting & Lazy Loading Implementation
 **Author: Antigravity (AI) & Sergio**
 

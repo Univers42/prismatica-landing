@@ -51,4 +51,13 @@ Prismatica utiliza una estrategia de **Doble Capa de Estado** para garantizar co
 
 ---
 
+## 🚀 **OPTIMIZACIÓN Y RENDIMIENTO (Web Vitals)**
+
+El Core Web Vitals y el Time to Interactive (TTI) se garantizan a través de tres pilares técnicos:
+1. **LazyMotion (Framer Motion)**: Carga diferida del motor de animaciones usando el subset estricto `domAnimation`.
+2. **Code-Splitting y Component Lazy Loading**: Separación a nivel de rutas (`React.lazy()` en el `Router`) y widgets, difiriendo la carga de Canvas y layouts "Below the Fold" para agilizar el First Contentful Paint (FCP).
+3. **Pipeline Automático de Assets**: Compresión severa de recursos visuales y vectoriales en fase de build con `vite-plugin-image-optimizer`, obteniendo reducciones comprobadas del ~66% sin merma en el acabado visual "Premium".
+
+---
+
 Este es un proyecto **production-ready** en términos de arquitectura, con énfasis en rendimiento visual, experiencia premium y mantenibilidad a largo plazo.

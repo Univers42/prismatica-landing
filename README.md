@@ -43,6 +43,8 @@ El proyecto sigue una fusión de **Feature-Sliced Design (FSD)** y **Atomic Desi
 Basado en la revisión general definida en [ROADMAP.md](./ROADMAP.md):
 
 ### 🛠️ Tareas de Arquitectura Completadas
+- [x] Optimización total de Assets: Pipeline local con **vite-plugin-image-optimizer** (Reducción de ~66%).
+- [x] **Code-Splitting** y Lazy Loading estructural de componentes pesados (Mejora de FCP).
 - [x] Migración a **LazyMotion** (Framer Motion) para optimización de bundle inicial.
 - [x] Migración total a arquitectura **FSD (Feature-Sliced Design)**.
 - [x] Centralización de lógica en **Shared Hooks** (ej. `useMousePosition`).

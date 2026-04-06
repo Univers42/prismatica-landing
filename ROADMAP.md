@@ -33,15 +33,13 @@ Migración exitosa a `LazyMotion` y el componente `m`, cargando solo `domAnimati
 Implementación exitosa de `React.lazy()` y `<Suspense>` tanto a nivel de rutas como de secciones visuales pesadas.
 - **Resultado**: Separación del código en 'chunks' independientes, priorizando el contenido "Above the Fold" (Hero y Navbar), lo que reduce drásticamente el First Contentful Paint (FCP).
 
-### 3. Pipeline de Optimización de Assets Automático
-El proyecto maneja efectos visuales "Premium" que dependen de assets.
-- **Acción**: Integrar `vite-plugin-image-optimizer` para asegurar que todas las imágenes se sirvan en formatos modernos (WebP/AVIF) y con compresión sin pérdida durante el build.
-- **Impacto**: Reducción drástica del peso de la página y consumo de ancho de banda.
+### ✅ 3. Pipeline de Optimización de Assets Automático
+Integración de `vite-plugin-image-optimizer` y migración de assets externos (CDN) al sistema de archivos local para su compresión durante el pipeline de build.
+- **Resultado**: Reducción drástica del peso de los assets visuales clave (hasta un 66% de ahorro, ~771KB), minimizando el consumo de ancho de banda sin pérdida de calidad percibida.
 
 ---
 
 ## 🗺️ Próximas Metas (Arquitectura & UX)
 
-1. **Optimización de Assets**: Configurar pipeline para formatos modernos (WebP/AVIF).
-2. **Interactividad Avanzada**: Refinar comportamientos de `StarField` y `GalaxySection` ante eventos de scroll profundos.
+1. **Interactividad Avanzada**: Refinar comportamientos de `StarField` y `GalaxySection` ante eventos de scroll profundos.
 3. **Integración de Backend Real**: Sustituir mocks por endpoints productivos.

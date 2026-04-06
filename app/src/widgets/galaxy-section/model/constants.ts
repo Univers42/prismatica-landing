@@ -1,4 +1,6 @@
-export const GALAXY_IMG = 'https://media.base44.com/images/public/69cafcb4a2756f895662c19b/46de791da_generated_06a78d1c.png';
+import GALAXY_IMG from '@/assets/images/galaxy-bg.png';
+
+export { GALAXY_IMG };
 export const COLORS = ['#00E5FF', '#FF007A', '#7000FF', '#00FFD1', '#FF66C4'];
 
 export interface StatItem {
