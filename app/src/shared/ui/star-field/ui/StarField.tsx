@@ -15,6 +15,10 @@ export interface StarFieldProps {
   readonly density?: number; // 0 to 1
 }
 
+// 🌌 Configuration Constants
+const WAVE_RADIUS = 180;
+const CONNECTION_LIMIT = 140;
+
 export function StarField({ 
   mousePos, 
   scrollProgress, 
@@ -36,8 +40,8 @@ export function StarField({
     const canvas = canvasRef.current;
     if (!canvas) return;
     
-    const w = canvas.offsetWidth || window.innerWidth;
-    const h = canvas.offsetHeight || window.innerHeight;
+    const w = canvas.offsetWidth || globalThis.innerWidth;
+    const h = canvas.offsetHeight || globalThis.innerHeight;
     canvas.width = w;
     canvas.height = h;
 
@@ -53,7 +57,7 @@ export function StarField({
     for (let i = 0; i < stars.length; i++) {
       for (let j = i + 1; j < stars.length; j++) {
         const dist = Math.hypot(stars[i].x - stars[j].x, stars[i].y - stars[j].y);
-        if (dist < 140) {
+        if (dist < CONNECTION_LIMIT) {
           stars[i].connections.push(j);
         }
       }
@@ -65,9 +69,90 @@ export function StarField({
   useEffect(() => {
     init();
     const handleResize = () => init();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    globalThis.addEventListener('resize', handleResize);
+    return () => globalThis.removeEventListener('resize', handleResize);
   }, [init]);
+
+  // ✅ Physics Engine Rule: Unified movement logic
+  const updateStarPhysics = (s: StarNode, localMx: number, localMy: number) => {
+    const dx = s.baseX - localMx;
+    const dy = s.baseY - localMy;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist < WAVE_RADIUS) {
+      const force = (1 - dist / WAVE_RADIUS);
+      const angle = Math.atan2(dy, dx);
+      const pushStr = force * force * 30;
+      s.vx += Math.cos(angle) * pushStr * 0.08;
+      s.vy += Math.sin(angle) * pushStr * 0.08;
+    }
+
+    s.vx += (s.baseX - s.x) * 0.04;
+    s.vy += (s.baseY - s.y) * 0.04;
+    s.vx *= 0.82;
+    s.vy *= 0.82;
+    s.x += s.vx;
+    s.y += s.vy;
+
+    return dist;
+  };
+
+  // ✅ Rendering Engine Rule: Atomic star rendering
+  const drawStar = (ctx: CanvasRenderingContext2D, s: StarNode, dist: number, frame: number, globalBoost: number) => {
+    const twinkle = Math.sin(frame * s.twinkleSpeed + s.twinkleOffset) * 0.5 + 0.5;
+    const alphaBoost = dist < WAVE_RADIUS ? (1 - dist / WAVE_RADIUS) * 0.6 : 0;
+    const finalAlpha = Math.min(1, s.baseAlpha + twinkle * 0.15 + alphaBoost + globalBoost * 0.4);
+
+    ctx.beginPath();
+    const radiusBoost = dist < WAVE_RADIUS ? (1 - dist / WAVE_RADIUS) * 2 : 0;
+    ctx.arc(s.x, s.y, s.radius + radiusBoost, 0, Math.PI * 2);
+    ctx.fillStyle = s.color;
+    ctx.globalAlpha = finalAlpha;
+    ctx.fill();
+
+    // Subtle glow nearby mouse
+    if (dist < WAVE_RADIUS * 0.6) {
+      const glowStr = (1 - dist / (WAVE_RADIUS * 0.6));
+      const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.radius * 6 + glowStr * 8);
+      grad.addColorStop(0, s.color);
+      grad.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.radius * 6 + glowStr * 8, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = glowStr * 0.25;
+      ctx.fill();
+    }
+  };
+
+  // ✅ Neural Network Rule: Connection matrix rendering
+  const drawConnections = (ctx: CanvasRenderingContext2D, stars: StarNode[], localMx: number, localMy: number, globalBoost: number) => {
+    for (const s of stars) {
+      for (const j of s.connections) {
+        const t = stars[j];
+        const midX = (s.x + t.x) / 2;
+        const midY = (s.y + t.y) / 2;
+        const distToMouse = Math.hypot(midX - localMx, midY - localMy);
+        const connDist = Math.hypot(s.x - t.x, s.y - t.y);
+        
+        const baseFade = 1 - connDist / CONNECTION_LIMIT;
+        const mouseBoost = distToMouse < 200 ? (1 - distToMouse / 200) * 0.5 : 0;
+        const lineAlpha = Math.min(0.35, baseFade * 0.08 + mouseBoost + globalBoost * 0.15);
+
+        if (lineAlpha < 0.005) continue;
+
+        const grad = ctx.createLinearGradient(s.x, s.y, t.x, t.y);
+        grad.addColorStop(0, s.color);
+        grad.addColorStop(1, t.color);
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(t.x, t.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 0.6;
+        ctx.globalAlpha = lineAlpha;
+        ctx.stroke();
+      }
+    }
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -77,110 +162,36 @@ export function StarField({
 
     const draw = () => {
       frameRef.current++;
-      const frame = frameRef.current;
-      const w = canvas.width;
-      const h = canvas.height;
       const rect = canvas.getBoundingClientRect();
       const localMx = mousePosRef.current.x - rect.left;
       const localMy = mousePosRef.current.y - rect.top;
-      const sp = scrollRef.current;
+      const globalBoost = scrollRef.current * 0.6;
 
-      const globalBoost = sp * 0.6;
-      ctx.clearRect(0, 0, w, h);
-
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       const stars = starsRef.current;
-      const WAVE_RADIUS = 180;
 
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i];
-        const dx = s.baseX - localMx;
-        const dy = s.baseY - localMy;
-        const dist = Math.hypot(dx, dy);
-
-        if (dist < WAVE_RADIUS) {
-          const force = (1 - dist / WAVE_RADIUS);
-          const angle = Math.atan2(dy, dx);
-          const pushStr = force * force * 30;
-          s.vx += Math.cos(angle) * pushStr * 0.08;
-          s.vy += Math.sin(angle) * pushStr * 0.08;
-        }
-
-        s.vx += (s.baseX - s.x) * 0.04;
-        s.vy += (s.baseY - s.y) * 0.04;
-        s.vx *= 0.82;
-        s.vy *= 0.82;
-        s.x += s.vx;
-        s.y += s.vy;
-
-        const twinkle = Math.sin(frame * s.twinkleSpeed + s.twinkleOffset) * 0.5 + 0.5;
-        let alphaBoost = 0;
-        if (dist < WAVE_RADIUS) {
-          alphaBoost = (1 - dist / WAVE_RADIUS) * 0.6;
-        }
-        const finalAlpha = Math.min(1, s.baseAlpha + twinkle * 0.15 + alphaBoost + globalBoost * 0.4);
-
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.radius + (dist < WAVE_RADIUS ? (1 - dist / WAVE_RADIUS) * 2 : 0), 0, Math.PI * 2);
-        ctx.fillStyle = s.color;
-        ctx.globalAlpha = finalAlpha;
-        ctx.fill();
-
-        if (dist < WAVE_RADIUS * 0.6) {
-          const glowStr = (1 - dist / (WAVE_RADIUS * 0.6));
-          const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.radius * 6 + glowStr * 8);
-          grad.addColorStop(0, s.color);
-          grad.addColorStop(1, 'transparent');
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.radius * 6 + glowStr * 8, 0, Math.PI * 2);
-          ctx.fillStyle = grad;
-          ctx.globalAlpha = glowStr * 0.25;
-          ctx.fill();
-        }
+      // 1. Update and Draw Stars (Combined pass for cache efficiency)
+      for (const s of stars) {
+        const dist = updateStarPhysics(s, localMx, localMy);
+        drawStar(ctx, s, dist, frameRef.current, globalBoost);
       }
 
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i];
-        for (const j of s.connections) {
-          const t = stars[j];
-          const midX = (s.x + t.x) / 2;
-          const midY = (s.y + t.y) / 2;
-          const distToMouse = Math.hypot(midX - localMx, midY - localMy);
-          const connDist = Math.hypot(s.x - t.x, s.y - t.y);
-          const baseFade = 1 - connDist / 140;
-          const mouseBoost = distToMouse < 200 ? (1 - distToMouse / 200) * 0.5 : 0;
-          const lineAlpha = Math.min(0.35, baseFade * 0.08 + mouseBoost + globalBoost * 0.15);
-
-          if (lineAlpha < 0.005) continue;
-
-          const grad = ctx.createLinearGradient(s.x, s.y, t.x, t.y);
-          grad.addColorStop(0, s.color);
-          grad.addColorStop(1, t.color);
-
-          ctx.beginPath();
-          ctx.moveTo(s.x, s.y);
-          ctx.lineTo(t.x, t.y);
-          ctx.strokeStyle = grad;
-          ctx.lineWidth = 0.6;
-          ctx.globalAlpha = lineAlpha;
-          ctx.stroke();
-        }
-      }
+      // 2. Draw Connections (Second pass for layer consistency)
+      drawConnections(ctx, stars, localMx, localMy, globalBoost);
 
       ctx.globalAlpha = 1;
       animRef.current = requestAnimationFrame(draw);
     };
 
     animRef.current = requestAnimationFrame(draw);
-    
-    return () => {
-      if (animRef.current !== null) cancelAnimationFrame(animRef.current);
-    };
+    return () => { if (animRef.current !== null) cancelAnimationFrame(animRef.current); };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
       className={`${styles.canvasLayer} ${className || ''}`}
+      aria-hidden="true"
     />
   );
 }
