@@ -34,37 +34,4 @@ body {
 // (Moved to component-level CSS Modules where possible)
 
 // ── 5. Shared animation classes ──
-
-// Chromatic text hover (subtle colour shift on mouse proximity)
-.chromatic-hover {
-  transition: text-shadow 0.3s ease;
-}
-
-// Optical grid pattern (background decoration)
-.optical-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
-// Spectrum line (horizontal gradient divider)
-.spectrum-line {
-  height: 1px;
-  width: 80%;
-  max-width: 400px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--prisma-spectral-cyan),
-    var(--prisma-spectral-violet),
-    var(--prisma-spectral-rose),
-    transparent
-  );
-  transform-origin: center;
-  margin-top: 2rem;
-}
+// (Moved to HeroSection.module.scss to enforce FSD encapsulation)

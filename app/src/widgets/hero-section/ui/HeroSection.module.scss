@@ -70,3 +70,36 @@
   0%, 100% { opacity: 0.5; filter: blur(10px); transform: scale(0.95); }
   50% { opacity: 1; filter: blur(15px); transform: scale(1); }
 }
+
+// ── Rescued Global Classes ──
+
+.chromaticHover {
+  transition: text-shadow 0.3s ease;
+}
+
+.opticalGrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.spectrumLine {
+  height: 1px;
+  width: 80%;
+  max-width: 400px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--prisma-spectral-cyan),
+    var(--prisma-spectral-violet),
+    var(--prisma-spectral-rose),
+    transparent
+  );
+  transform-origin: center;
+  margin-top: 2rem;
+}
