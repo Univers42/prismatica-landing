@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './LightCursor.module.css';
+import styles from './LightCursor.module.scss';
 
 export interface MousePosition {
   readonly x: number;

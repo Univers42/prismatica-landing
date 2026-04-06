@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { GlassCard } from '@/components/molecules/GlassCard/GlassCard';
-import { Dialog } from '@/components/atoms/Dialog/Dialog';
+import { GlassCard } from '@/shared/ui/glass-card';
+import { Dialog, Section, SectionGlow, SectionContent, SectionHeadline, SectionSubtext, SectionLabel, SectionGrid } from '@/shared/ui';
 
 // Feature data — adapt from your existing features model
 interface Feature {
@@ -85,10 +85,9 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
   const brightness = Math.min(1, Math.max(0, (scrollProgress - 0.2) * 2));
 
   return (
-    <section className="prisma-section">
+    <Section>
       {/* Ambient glow */}
-      <div
-        className="prisma-section__glow"
+      <SectionGlow
         style={{
           background: `radial-gradient(ellipse at 50% 50%,
             rgba(0,229,255,${brightness * 0.04}) 0%,
@@ -97,41 +96,45 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
         }}
       />
 
-      <div className="prisma-section__content">
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="prisma-section__label"
-        >
-          The Refraction
-        </motion.p>
+      <SectionContent>
+        <SectionLabel>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+          >
+            The Refraction
+          </motion.span>
+        </SectionLabel>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="prisma-section__headline chromatic-hover"
-        >
-          One model. Infinite perspectives.
-        </motion.h2>
+        <SectionHeadline>
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="chromatic-hover"
+          >
+            One model. Infinite perspectives.
+          </motion.span>
+        </SectionHeadline>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="prisma-section__subtext"
-        >
-          Your data exists. Info is scattered across the dark -formless, invisible -
-          waiting to be shaped. Now you can see it.
-        </motion.p>
-      </div>
+        <SectionSubtext>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            Your data exists. Info is scattered across the dark -formless, invisible -
+            waiting to be shaped. Now you can see it.
+          </motion.span>
+        </SectionSubtext>
+      </SectionContent>
 
       {/* Feature cards */}
-      <div className="prisma-section__grid">
+      <SectionGrid>
         {FEATURES.map((feature, i) => (
           <motion.div
             key={feature.title}
@@ -150,7 +153,7 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
             />
           </motion.div>
         ))}
-      </div>
+      </SectionGrid>
 
       {/* Specs dialog */}
       <Dialog
@@ -168,6 +171,6 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
           </div>
         ))}
       </Dialog>
-    </section>
+    </Section>
   );
 }

@@ -1,8 +1,10 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { AnimatedPrism } from '@/widgets/animated-prism';
+import { Section, SectionGlow, SectionContent } from '@/shared/ui';
+import styles from './HeroSection.module.scss';
 
 export interface MousePosition {
   readonly x: number;
@@ -17,15 +19,12 @@ export interface HeroSectionProps {
 
 export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
   const navigate = useNavigate();
-  const sectionRef = useRef<HTMLElement>(null);
   const [prismGlow, setPrismGlow] = useState(0);
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const rect = section.getBoundingClientRect();
-    const prismX = rect.left + rect.width / 2;
-    const prismY = rect.top + rect.height / 2;
+    // Logic for glow distance calculation
+    const prismX = window.innerWidth / 2;
+    const prismY = window.innerHeight / 2;
     const dist = Math.hypot(mousePos.x - prismX, mousePos.y - prismY);
     const glow = Math.max(0, 1 - dist / 400);
     setPrismGlow((prev) => Math.max(prev * 0.96, glow));
@@ -34,13 +33,12 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
   const gi = prismGlow;
 
   return (
-    <section ref={sectionRef} className="prisma-section">
-      {/* Optical grid background */}
+    <Section id="hero">
+      {/* Optical grid background - kept as global or could be componentized */}
       <div className="optical-grid" />
 
       {/* Mouse-reactive ambient glow */}
-      <div
-        className="prisma-section__glow"
+      <SectionGlow
         style={{
           background: `radial-gradient(ellipse at ${mousePos.x}px ${mousePos.y}px,
             rgba(0,229,255,${(0.04 + gi * 0.08).toFixed(3)}) 0%,
@@ -49,13 +47,13 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
         }}
       />
 
-      <div className="prisma-section__content">
+      <SectionContent className={styles.heroContainer}>
         {/* Tagline */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.2 }}
-          className="hero__tagline"
+          className={styles.tagline}
         >
           Polymorphic Data Platform
         </motion.p>
@@ -65,7 +63,7 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.5 }}
-          className="hero__headline chromatic-hover"
+          className={`${styles.headline} chromatic-hover`}
         >
           <span>  PRISMATICA </span>
         </motion.h1>
@@ -75,7 +73,7 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 1 }}
-          className="hero__prism-wrapper"
+          className={styles.prismWrapper}
         >
           <AnimatedPrism mousePos={mousePos} glowIntensity={gi} />
         </motion.div>
@@ -85,7 +83,7 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 1.4 }}
-          className="hero__subtext"
+          className={styles.subtext}
         >
           Prism your ideas:
           watch the whole spectrum unfold at will
@@ -99,7 +97,7 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           transition={{ duration: 1, delay: 2 }}
           onClick={() => navigate('/login')}
           whileHover={{ scale: 1.04 }}
-          className="hero__cta"
+          className={styles.cta}
           style={{
             borderColor: `rgba(0,229,255,${0.1 + gi * 0.4})`,
             boxShadow: `0 0 ${20 + gi * 40}px rgba(0,229,255,${0.03 + gi * 0.12})`,
@@ -116,7 +114,7 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           transition={{ duration: 2, delay: 2.5 }}
           className="spectrum-line"
         />
-      </div>
-    </section>
+      </SectionContent>
+    </Section>
   );
 }

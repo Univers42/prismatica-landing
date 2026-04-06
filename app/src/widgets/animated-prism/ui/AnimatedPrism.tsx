@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import styles from './AnimatedPrism.module.css';
+import styles from './AnimatedPrism.module.scss';
 
 export interface MousePosition {
   readonly x: number;

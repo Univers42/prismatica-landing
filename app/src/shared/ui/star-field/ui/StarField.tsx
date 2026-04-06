@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback } from 'react';
 import { NUM_STARS, createStar } from '../model/constants';
 import type { StarNode } from '../model/constants';
-import styles from './StarField.module.css';
+import styles from './StarField.module.scss';
 
 export interface MousePosition {
   readonly x: number;

@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { Dialog } from '@/components/atoms/Dialog/Dialog';
-import { COLOR_VALUES, type LucideIcon } from '../model/constants';
-import styles from './PrismCard.module.css';
+import { Dialog } from '@/shared/ui';
+import { COLOR_VALUES, type LucideIcon } from '@/widgets/prism-card/model/constants';
+import styles from './PrismCard.module.scss';
 
 export interface FeatureSpec {
   readonly label: string;

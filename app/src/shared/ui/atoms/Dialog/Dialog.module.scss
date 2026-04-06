@@ -1,0 +1,90 @@
+@use "@/shared/styles/abstracts" as *;
+// ── Dialog ────────────────────────────────────────────────
+// Lightweight modal dialog with glass styling.
+// Replaces Radix UI Dialog for the landing page.
+//
+// Usage:
+//   <div class="prisma-dialog-overlay">
+//     <div class="prisma-dialog prisma-dialog--md">
+//       <div class="prisma-dialog__header">
+//         <h3 class="prisma-dialog__title">Title</h3>
+//         <button class="prisma-dialog__close">&times;</button>
+//       </div>
+//       <div class="prisma-dialog__body">Content</div>
+//     </div>
+//   </div>
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: prisma-fade-in 0.2s ease;
+}
+
+.dialog {
+  position: relative;
+  width: 90%;
+  background: var(--prisma-landing-bg-subtle, #0a0a12);
+  border: 1px solid var(--prisma-glass-border-hover);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: prisma-scale-in 0.2s ease;
+  max-height: 85vh;
+  overflow-y: auto;
+
+  &--.sm { max-width: 400px; }
+  &--.md { max-width: 560px; }
+  &--.lg { max-width: 720px; }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--prisma-landing-text-bright);
+    margin: 0;
+  }
+
+  .close {
+    background: none;
+    border: none;
+    color: var(--prisma-landing-text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--prisma-landing-text-bright);
+    }
+  }
+
+  .body {
+    color: var(--prisma-landing-text);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+}
+
+@keyframes prisma-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes prisma-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

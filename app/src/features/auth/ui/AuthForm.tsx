@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, ShieldCheck, LogOut, CheckCircle2 } from 'lucide-react';
 import { GlassCard } from '@/shared/ui/glass-card';
-import { useLogin, useAuth } from '../index';
+import { useLogin } from '@/features/auth/model/authHooks';
+import { useAuthStatus, useAuthUser, useAuthActions } from '@/features/auth/model/authStore';
 import type { AuthProvider } from '../api/mockAuthService';
 import styles from './AuthForm.module.scss';
 
 export function AuthForm(): React.JSX.Element {
   const [isLogin, setIsLogin] = useState(true);
-  const { status, user, loginState, logout } = useAuth();
+  const status = useAuthStatus();
+  const user = useAuthUser();
+  const { loginState, logout } = useAuthActions();
   const loginMutation = useLogin();
   const [otp, setOtp] = useState('');
 
@@ -131,7 +134,7 @@ export function AuthForm(): React.JSX.Element {
               disabled={loginMutation.isPending}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M11 17h2v-6h4v-2h-4v-4h-2v4h-4v2h4v6zm-9-5c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zm10-8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z"/>
+                <path d="M11 17h2v-6h4v-2h-4v-2h-4v-4h-2v4h-4v2h4v6zm-9-5c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zm10-8c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8z"/>
               </svg>
               <span>Intra 42</span>
             </button>

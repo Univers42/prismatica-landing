@@ -1,6 +1,6 @@
 import React from 'react';
 import { SECTIONS, SECTION_COLORS, SECTION_COLORS_RGB } from '../model/constants';
-import styles from './ScrollProgress.module.css';
+import styles from './ScrollProgress.module.scss';
 
 export interface ScrollProgressProps {
   readonly progress: number;

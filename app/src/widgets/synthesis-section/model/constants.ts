@@ -1,5 +1,5 @@
 import { Mail, Globe as Github, Globe as Linkedin } from 'lucide-react';
-import type { LucideIcon } from '../../prism-card/model/constants';
+import type { LucideIcon } from '@/widgets/prism-card/model/constants';
 
 export const CONVERGENCE_IMG = 'https://media.base44.com/images/public/69cafcb4a2756f895662c19b/43da19e93_generated_052a15fb.png';
 

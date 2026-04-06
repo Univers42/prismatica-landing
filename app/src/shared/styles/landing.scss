@@ -1,0 +1,89 @@
+// ── Landing base styles ──────────────────────────────────
+// Replaces index.css and App.css for the landing page.
+// Imports libcss foundation + landing extensions.
+//
+// This is the SINGLE entry point for all landing styles.
+// Import in main.tsx: import './landing.scss';
+
+// ── 1. libcss foundation (provides reset, typography, themes, utilities) ──
+// Uncomment when libcss SCSS source is available:
+// @use '../lib/libcss/src/scss/libcss' as *;
+
+// ── 2. Landing extensions ──
+@use 'abstracts' as *;
+
+// ── 3. Landing global overrides ──
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--prisma-landing-bg);
+  color: var(--prisma-landing-text);
+  overflow: hidden;
+}
+
+// ── 4. Landing-specific utility classes ──
+
+.landing-container {
+  min-height: 100vh;
+  overflow: hidden;
+  cursor: none; // Replaced by LightCursor
+  background: var(--prisma-landing-bg);
+}
+
+.landing-scroll {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ── 5. Shared animation classes ──
+
+// Chromatic text hover (subtle colour shift on mouse proximity)
+.chromatic-hover {
+  transition: text-shadow 0.3s ease;
+}
+
+// Optical grid pattern (background decoration)
+.optical-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+// Spectrum line (horizontal gradient divider)
+.spectrum-line {
+  height: 1px;
+  width: 80%;
+  max-width: 400px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--prisma-spectral-cyan),
+    var(--prisma-spectral-violet),
+    var(--prisma-spectral-rose),
+    transparent
+  );
+  transform-origin: center;
+  margin-top: 2rem;
+}

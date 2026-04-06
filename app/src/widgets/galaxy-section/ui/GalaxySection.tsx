@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { GALAXY_IMG, COLORS, GALAXY_STATS } from '../model/constants';
-import type { GalaxyNode } from '../model/constants';
-import styles from './GalaxySection.module.css';
+import type { GalaxyNode } from '@/widgets/galaxy-section/model/constants';
+import { Section, SectionContent, SectionHeadline, SectionSubtext, SectionLabel } from '@/shared/ui';
+import styles from './GalaxySection.module.scss';
 
 export interface MousePosition {
   readonly x: number;
@@ -171,7 +172,7 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
   }, []);
 
   return (
-    <section className={styles.sectionContainer}>
+    <Section className={styles.sectionContainer}>
       {/* Background image */}
       <div className={styles.backgroundWrapper}>
         <img
@@ -190,34 +191,39 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
       />
 
       {/* Content overlay */}
-      <div className={styles.contentOverlay}>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className={styles.subtitle}
-        >
-          The Galaxy
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className={styles.headline}
-        >
-          A universe of connections like you<br />never saw before
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className={styles.description}
-        >
-          When your raw data passes through the prism of structure, insights illuminate, and what was invisible becomes your competitive advantage.
-        </motion.p>
+      <SectionContent className={styles.contentOverlay}>
+        <SectionLabel>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+          >
+            The Galaxy
+          </motion.span>
+        </SectionLabel>
+
+        <SectionHeadline className={styles.headline}>
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+          >
+            A universe of connections like you<br />never saw before
+          </motion.span>
+        </SectionHeadline>
+
+        <SectionSubtext className={styles.description}>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.4 }}
+          >
+            When your raw data passes through the prism of structure, insights illuminate, and what was invisible becomes your competitive advantage.
+          </motion.span>
+        </SectionSubtext>
 
         {/* Stats */}
         <motion.div
@@ -239,7 +245,7 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
             </div>
           ))}
         </motion.div>
-      </div>
-    </section>
+      </SectionContent>
+    </Section>
   );
 }

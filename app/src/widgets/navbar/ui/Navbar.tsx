@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import styles from './Navbar.module.scss';
 
 export function Navbar(): React.JSX.Element {
   return (
@@ -6,25 +7,25 @@ export function Navbar(): React.JSX.Element {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, delay: 0.5 }}
-      className="landing-nav"
+      className={styles.navContainer}
     >
       {/* Logo */}
-      <div className="landing-nav__logo">
-        <div className="landing-nav__logo-icon" />
-        <span className="landing-nav__logo-text">Prismatica</span>
+      <div className={styles.logoWrapper}>
+        <div className={styles.logoIcon} />
+        <span className={styles.logoText}>Prismatica</span>
       </div>
 
       {/* Nav links */}
-      <div className="landing-nav__links">
+      <div className={styles.links}>
         {['Platform', 'Features', 'Docs'].map((item) => (
-          <span key={item} className="landing-nav__link">
+          <span key={item} className={styles.link}>
             {item}
           </span>
         ))}
       </div>
 
       {/* CTA */}
-      <button className="landing-nav__cta">Get Access</button>
+      <button className={styles.cta}>Get Access</button>
     </motion.nav>
   );
 }

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { Section, SectionGlow, SectionContent, SectionHeadline, SectionSubtext, SectionLabel, Input, Textarea } from '@/shared/ui';
+import styles from './SynthesisSection.module.scss';
 
 export interface SynthesisSectionProps {
   readonly scrollProgress: number;
@@ -22,11 +24,10 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
   };
 
   return (
-    <section className="prisma-section">
+    <Section id="synthesis">
       {/* Spectral glow */}
       {brightness > 0.1 && (
-        <div
-          className="prisma-section__glow"
+        <SectionGlow
           style={{
             background: `radial-gradient(ellipse at 50% 50%,
               rgba(0,229,255,${brightness * 0.06}) 0%,
@@ -37,7 +38,7 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
         />
       )}
 
-      <div className="prisma-section__content" style={{
+      <SectionContent style={{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'flex-start',
@@ -55,8 +56,7 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
           transition={{ duration: 1 }}
           style={{ flex: '1 1 300px' }}
         >
-          <p
-            className="prisma-section__label"
+          <SectionLabel
             style={{
               color: `rgba(112,0,255,${0.6 + brightness * 0.4})`,
               textShadow: brightness > 0.3 ? `0 0 15px rgba(112,0,255,${brightness * 0.6})` : 'none',
@@ -64,10 +64,9 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
             }}
           >
             The Synthesis
-          </p>
+          </SectionLabel>
 
-          <h2
-            className="prisma-section__headline"
+          <SectionHeadline
             style={{
               textAlign: 'left',
               color: `rgba(242,242,242,${0.7 + brightness * 0.3})`,
@@ -79,17 +78,16 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
             All light
             <br />
             converges here
-          </h2>
+          </SectionHeadline>
 
-          <p
-            className="prisma-section__subtext"
+          <SectionSubtext
             style={{
               textAlign: 'left',
               color: `rgba(160,160,180,${0.6 + brightness * 0.4})`,
             }}
           >
             Ready for data clarity?
-          </p>
+          </SectionSubtext>
         </motion.div>
 
         {/* Right: form */}
@@ -102,60 +100,69 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
         >
           <form
             onSubmit={handleSubmit}
-            className="synthesis__form"
+            className={styles.synthesisForm}
             style={{
               boxShadow: brightness > 0.1
                 ? `0 0 ${30 + brightness * 60}px rgba(112,0,255,${brightness * 0.08})`
                 : 'none',
             }}
           >
-            <div>
-              <label className="synthesis__label">Name</label>
-              <input
+            <div className={styles.formField}>
+              <label className={styles.fieldLabel}>Name</label>
+              <Input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Your name"
-                className="synthesis__input"
                 required
+                disabled={sending}
               />
             </div>
 
-            <div>
-              <label className="synthesis__label">Email</label>
-              <input
+            <div className={styles.formField}>
+              <label className={styles.fieldLabel}>Email</label>
+              <Input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="name@example.com"
-                className="synthesis__input"
                 required
+                disabled={sending}
               />
             </div>
 
-            <div>
-              <label className="synthesis__label">Message</label>
-              <textarea
+            <div className={styles.formField}>
+              <label className={styles.fieldLabel}>Message</label>
+              <Textarea
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Tell us about your data..."
                 rows={4}
-                className="synthesis__textarea"
                 required
+                disabled={sending}
               />
             </div>
 
             <button
               type="submit"
               disabled={sending}
-              className="synthesis__submit"
+              className={styles.submitButton}
             >
-              {sending ? 'Sending...' : 'Begin your spectrum'}
-              <ArrowRight size={16} />
+              {sending ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  Begin your spectrum
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </form>
         </motion.div>
-      </div>
+      </SectionContent>
 
       {/* Footer */}
       <div className="landing-footer">
@@ -168,6 +175,6 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
