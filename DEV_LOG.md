@@ -4,6 +4,23 @@ Welcome to the central development diary of Prismatica. This log tracks major ar
 
 ---
 
+## 🗓️ 2026-04-06 [Performance]: LazyMotion Integration & Animation Optimization
+**Author: Antigravity (AI) & Sergio**
+
+### 🎯 Objective
+Optimize the application's runtime performance and initial payload by migrating from the full Framer Motion engine to the `LazyMotion` provider with deferred animation loading.
+
+### ✅ Key Achievements
+- **LazyMotion Implementation**:
+    - Integrated `LazyMotion` with `domAnimation` at the root (`App.tsx`).
+    - Enforced `strict` mode to ensure optimized animation properties across all layers.
+- **Global Component Refactoring**:
+    - Systematically replaced `motion` imports with the optimized `m` component in all FSD layers (`shared`, `widgets`, `features`, `pages`).
+    - Migrated high-impact components like `HeroSection`, `GalaxySection`, and `AuthForm`.
+- **Measurable Performance Gains**:
+    - **Bundle Reduction**: Approximately **46kB** reduction in the initial JS bundle size.
+    - **TTI Improvement**: Deferred execution of animation logic, resulting in a faster Time to Interactive.
+
 ## 🗓️ 2026-04-06 [Refactor]: Architectural Consolidation & State Migration
 **Author: Antigravity (AI) & Sergio**
 

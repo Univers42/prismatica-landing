@@ -42,13 +42,9 @@ El proyecto sigue una fusión de **Feature-Sliced Design (FSD)** y **Atomic Desi
 
 Basado en la revisión general definida en [ROADMAP.md](./ROADMAP.md):
 
-### ⚡ Próximas Mejoras de Rendimiento
-1.  **LazyMotion**: Implementación de `LazyMotion` para reducir el bundle inicial del motor de animaciones.
-2.  **Asset Optimization**: Pipeline automático para servir imágenes en formatos modernos (WebP/AVIF).
-
 ### 🛠️ Tareas de Arquitectura Completadas
+- [x] Migración a **LazyMotion** (Framer Motion) para optimización de bundle inicial.
 - [x] Migración total a arquitectura **FSD (Feature-Sliced Design)**.
-- [x] Implementación de **Zustand** para la gestión de estado global.
 - [x] Centralización de lógica en **Shared Hooks** (ej. `useMousePosition`).
 
 ---

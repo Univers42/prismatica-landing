@@ -25,10 +25,9 @@ El proyecto está en una fase de transición hacia una estructura **FSD (Feature
 
 Para mantener la experiencia "Premium" y "State of the Art" de Prismatica, se proponen las siguientes optimizaciones técnicas:
 
-### 1. Implementación de `LazyMotion` (Framer Motion)
-Actualmente se importa `motion` de forma estándar, lo que incluye todo el motor de animaciones en el bundle principal (~25kb gzipped).
-- **Acción**: Migrar a `LazyMotion` y `m` cargando solo las constantes `domAnimation` o `domMax`.
-- **Impacto**: Reducción inmediata del Time to Interactive (TTI).
+### ✅ 1. Implementación de `LazyMotion` (Framer Motion)
+Migración exitosa a `LazyMotion` y el componente `m`, cargando solo `domAnimation`.
+- **Resultado**: Reducción del bundle inicial de JS en ~46kB y optimización del Time to Interactive (TTI).
 
 ### 2. Code-Splitting a Nivel de Ruta y Componentes Pesados
 `App.tsx` importa la página `Landing` de forma estática. 

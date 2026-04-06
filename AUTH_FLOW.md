@@ -55,7 +55,8 @@ The `schema.user.sql` anticipates Multi-Factor Authentication through the `mfa_e
 
 ### Current Implementation (Frontend)
 The frontend now utilizes **Zustand (`useAuthStore`)** to manage the `AWAITING_MFA` and `AUTHENTICATED` states globally.
-- When an OAuth login succeeds, if the returned mock user has `mfa_enabled: true` (e.g., Google mock profile), the store state changes to `AWAITING_MFA` via `actions.loginState`.
+- When an OAuth login succeeds, if the returned mock user has `mfa_enabled: true`, the store state changes via `actions.loginState`.
+- **Optimization**: The Auth UI components (e.g., `AuthForm.tsx`) are migrated to **LazyMotion**, ensuring the login experience is both premium and high-performance.
 
 ### Future Implementation (Backend & Activation)
 
