@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { StarField } from '@/shared/ui/star-field';
 import { LightCursor } from '@/shared/ui/light-cursor';
 import { AuthForm } from '@/features/auth';
@@ -55,7 +55,7 @@ export function LoginPage(): React.JSX.Element {
 
       {/* Left side: Content & Form */}
       <div className={styles.leftSide}>
-        <motion.div 
+        <m.div 
           className={styles.logoContainer}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ export function LoginPage(): React.JSX.Element {
             <div className={styles.logoIcon} />
             <span>Prismatica</span>
           </Link>
-        </motion.div>
+        </m.div>
 
         <div className={styles.formWrapper}>
           <AuthForm />
@@ -81,7 +81,7 @@ export function LoginPage(): React.JSX.Element {
         <div className={styles.visualContainer}>
           <div className={styles.vignette} />
           
-          <motion.div 
+          <m.div 
             className={styles.centerGlow}
             style={{
               background: `radial-gradient(circle at ${mousePos.x - (window.innerWidth / 2)}px ${mousePos.y}px, 

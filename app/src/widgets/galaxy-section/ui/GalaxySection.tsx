@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { GALAXY_IMG, COLORS, GALAXY_STATS } from '../model/constants';
 import type { GalaxyNode } from '@/widgets/galaxy-section/model/constants';
 import { Section, SectionContent, SectionHeadline, SectionSubtext, SectionLabel } from '@/shared/ui';
@@ -193,40 +193,40 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
       {/* Content overlay */}
       <SectionContent className={styles.contentOverlay}>
         <SectionLabel>
-          <motion.span
+          <m.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
             The Galaxy
-          </motion.span>
+          </m.span>
         </SectionLabel>
 
         <SectionHeadline className={styles.headline}>
-          <motion.span
+          <m.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.2 }}
           >
             A universe of connections like you<br />never saw before
-          </motion.span>
+          </m.span>
         </SectionHeadline>
 
         <SectionSubtext className={styles.description}>
-          <motion.span
+          <m.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.4 }}
           >
             When your raw data passes through the prism of structure, insights illuminate, and what was invisible becomes your competitive advantage.
-          </motion.span>
+          </m.span>
         </SectionSubtext>
 
         {/* Stats */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -244,7 +244,7 @@ export function GalaxySection({ mousePos, scrollProgress }: GalaxySectionProps):
               <p className={styles.statLabel}>{stat.label}</p>
             </div>
           ))}
-        </motion.div>
+        </m.div>
       </SectionContent>
     </Section>
   );

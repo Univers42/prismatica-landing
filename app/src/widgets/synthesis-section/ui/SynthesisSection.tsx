@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Section, SectionGlow, SectionContent, SectionHeadline, SectionSubtext, SectionLabel, Input, Textarea } from '@/shared/ui';
@@ -49,7 +49,7 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
         maxWidth: '900px',
       }}>
         {/* Left: messaging */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -88,10 +88,10 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
           >
             Ready for data clarity?
           </SectionSubtext>
-        </motion.div>
+        </m.div>
 
         {/* Right: form */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -161,7 +161,7 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
               )}
             </button>
           </form>
-        </motion.div>
+        </m.div>
       </SectionContent>
 
       {/* Footer */}

@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import styles from './Navbar.module.scss';
 
 export function Navbar(): React.JSX.Element {
   return (
-    <motion.nav
+    <m.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, delay: 0.5 }}
@@ -26,6 +26,6 @@ export function Navbar(): React.JSX.Element {
 
       {/* CTA */}
       <button className={styles.cta}>Get Access</button>
-    </motion.nav>
+    </m.nav>
   );
 }

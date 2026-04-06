@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { AnimatedPrism } from '@/widgets/animated-prism';
@@ -49,37 +49,37 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
 
       <SectionContent className={styles.heroContainer}>
         {/* Tagline */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5, delay: 0.2 }}
           className={styles.tagline}
         >
           Polymorphic Data Platform
-        </motion.p>
+        </m.p>
 
         {/* Headline */}
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.5 }}
           className={`${styles.headline} chromatic-hover`}
         >
           <span>  PRISMATICA </span>
-        </motion.h1>
+        </m.h1>
 
         {/* Prism */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 1 }}
           className={styles.prismWrapper}
         >
           <AnimatedPrism mousePos={mousePos} glowIntensity={gi} />
-        </motion.div>
+        </m.div>
 
         {/* Subtext */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 1.4 }}
@@ -88,10 +88,10 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
           Prism your ideas:
           watch the whole spectrum unfold at will
           and reveal the power of your light
-        </motion.p>
+        </m.p>
 
         {/* CTA */}
-        <motion.button
+        <m.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2 }}
@@ -105,10 +105,10 @@ export function HeroSection({ mousePos }: HeroSectionProps): React.JSX.Element {
         >
           Enter the spectrum
           <ChevronRight size={16} />
-        </motion.button>
+        </m.button>
 
         {/* Spectrum line */}
-        <motion.div
+        <m.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 2, delay: 2.5 }}

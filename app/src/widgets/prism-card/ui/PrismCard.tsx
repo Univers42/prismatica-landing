@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Dialog } from '@/shared/ui';
 import { COLOR_VALUES, type LucideIcon } from '@/widgets/prism-card/model/constants';
@@ -57,7 +57,7 @@ export function PrismCard({ title, subtitle, description, icon: Icon, color, spe
 
   return (
     <>
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -149,7 +149,7 @@ export function PrismCard({ title, subtitle, description, icon: Icon, color, spe
             Technical Specs →
           </button>
         </div>
-      </motion.div>
+      </m.div>
 
       <Dialog 
         open={showSpecs} 

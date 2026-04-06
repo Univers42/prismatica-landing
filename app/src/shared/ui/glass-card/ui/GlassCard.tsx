@@ -1,6 +1,6 @@
 import React, { type ReactNode } from 'react';
 import styles from './GlassCard.module.scss';
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { m, type HTMLMotionProps } from 'framer-motion';
 
 export interface GlassCardProps extends HTMLMotionProps<'div'> {
   children?: ReactNode;
@@ -27,7 +27,7 @@ export function GlassCard({
   const cardClasses = `${styles.glassCard} ${variant === 'ios' ? styles.glassCardIos : ''} ${className}`.trim();
 
   return (
-    <motion.div 
+    <m.div 
       className={cardClasses}
       style={{
         ...props.style,
@@ -40,7 +40,7 @@ export function GlassCard({
       {/* Rays */}
       <div className={styles.raysContainer}>
         {rays.map((ray, i) => (
-          <motion.div
+          <m.div
             key={i}
             className={styles.ray}
             initial={{ opacity: 0, height: 0 }}
@@ -60,6 +60,6 @@ export function GlassCard({
         {description && <p className={styles.description}>{description}</p>}
         {children}
       </div>
-    </motion.div>
+    </m.div>
   );
 }

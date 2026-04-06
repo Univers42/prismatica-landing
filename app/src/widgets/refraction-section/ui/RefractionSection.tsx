@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { GlassCard } from '@/shared/ui/glass-card';
 import { Dialog, Section, SectionGlow, SectionContent, SectionHeadline, SectionSubtext, SectionLabel, SectionGrid } from '@/shared/ui';
 
@@ -98,18 +98,18 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
 
       <SectionContent>
         <SectionLabel>
-          <motion.span
+          <m.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
           >
             The Refraction
-          </motion.span>
+          </m.span>
         </SectionLabel>
 
         <SectionHeadline>
-          <motion.span
+          <m.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -117,11 +117,11 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
             className="chromatic-hover"
           >
             One model. Infinite perspectives.
-          </motion.span>
+          </m.span>
         </SectionHeadline>
 
         <SectionSubtext>
-          <motion.span
+          <m.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -129,14 +129,14 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
           >
             Your data exists. Info is scattered across the dark -formless, invisible -
             waiting to be shaped. Now you can see it.
-          </motion.span>
+          </m.span>
         </SectionSubtext>
       </SectionContent>
 
       {/* Feature cards */}
       <SectionGrid>
         {FEATURES.map((feature, i) => (
-          <motion.div
+          <m.div
             key={feature.title}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +151,7 @@ export function RefractionSection({ scrollProgress }: RefractionSectionProps): R
               rays={feature.rays}
               onClick={() => setSpecsFor(feature)}
             />
-          </motion.div>
+          </m.div>
         ))}
       </SectionGrid>
 
