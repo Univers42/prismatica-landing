@@ -108,8 +108,9 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
             }}
           >
             <div className={styles.formField}>
-              <label className={styles.fieldLabel}>Name</label>
+              <label htmlFor='name-input' className={styles.fieldLabel}>Name</label>
               <Input
+                id='name-input'
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -120,8 +121,9 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
             </div>
 
             <div className={styles.formField}>
-              <label className={styles.fieldLabel}>Email</label>
+              <label htmlFor='email-input' className={styles.fieldLabel}>Email</label>
               <Input
+                id='email-input'
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -132,8 +134,9 @@ export function SynthesisSection({ scrollProgress }: SynthesisSectionProps): Rea
             </div>
 
             <div className={styles.formField}>
-              <label className={styles.fieldLabel}>Message</label>
+              <label htmlFor='message-input' className={styles.fieldLabel}>Message</label>
               <Textarea
+                id='message-input'
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 placeholder="Tell us about your data..."
