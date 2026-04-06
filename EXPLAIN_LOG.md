@@ -55,7 +55,22 @@ Instead of loading the `LandingPage` and `LoginPage` massive JavaScript blobs al
 
 ---
 
-## 📂 FSD Cheatsheet
+## 🧩 3. The Anatomy of an FSD Slice (e.g., `pages/landing`)
+
+We don't just throw code into one massive file. Let's look at how the **Landing Page** is structured as an isolated "Slice" of FSD.
+
+Inside `app/src/pages/landing`, you won't see a single `Landing.tsx` free-floating. Instead, you'll see a surgical separation of concerns:
+
+- **`index.ts` (Public API)**: The border guard. The rest of the app can ONLY import from this file. It hides the internal structure of the `landing/` slice from the outside world.
+- **`model/types.ts`**: Holds all the TypeScript interfaces (`LandingPageProps`, `MousePosition`). By separating these, we avoid UI files bloated with 50 lines of typings.
+- **`lib/useLandingNavigation.ts`**: Custom hooks. Even a 3-line function like `handleEnter` (which scrolls the page) is extracted here. Why? Because UI files should be purely declarative. If it *does* something imperative, it belongs in a hook.
+- **`ui/LandingPage.tsx`**: The orchestrator of visuals. It imports the model, imports the hook, and lays out the JSX. It contains zero complex logic.
+
+This specific pattern (API -> Model -> Logic -> UI) scales beautifully and is enforced across the entire application for widgets, features, and entities.
+
+---
+
+## 📂 4. FSD Layer Cheatsheet
 
 Where does the rest of the code live?
 - `pages/`: The full-screen views (like Login or Landing). They compose widgets.

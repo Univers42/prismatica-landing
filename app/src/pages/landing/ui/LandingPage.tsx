@@ -1,4 +1,10 @@
-import { useRef, useCallback, lazy, Suspense } from 'react';
+import { useRef, lazy, Suspense } from 'react';
+
+// Domain Logic & Data Models (FSD layer internals)
+import { useLandingNavigation } from '../lib/useLandingNavigation';
+import type { LandingPageProps } from '../model/types';
+
+// Widgets (FSD layer below Pages)
 import { Navbar } from '@/widgets/navbar';
 import { HeroSection } from '@/widgets/hero-section';
 
@@ -7,22 +13,17 @@ const RefractionSection = lazy(() => import('@/widgets/refraction-section').then
 const GalaxySection = lazy(() => import('@/widgets/galaxy-section').then(m => ({ default: m.GalaxySection })));
 const SynthesisSection = lazy(() => import('@/widgets/synthesis-section').then(m => ({ default: m.SynthesisSection })));
 
-export interface MousePosition {
-  readonly x: number;
-  readonly y: number;
-}
-
-export interface LandingPageProps {
-  readonly scrollProgress: number;
-  readonly mousePos: MousePosition;
-}
-
+/**
+ * 🏔️ Landing Page (View)
+ * 
+ * Strict 'Page' slice orchestrator. 
+ * Relies entirely on external widgets for rendering and internal hooks for logic.
+ */
 export function LandingPage({ scrollProgress, mousePos }: LandingPageProps): React.JSX.Element {
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const handleEnter = useCallback(() => {
-    window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-  }, []);
+  
+  // Custom Hook: Encapsulated navigation behaviors
+  const { handleEnter } = useLandingNavigation();
 
   return (
     <div className="landing-container">
