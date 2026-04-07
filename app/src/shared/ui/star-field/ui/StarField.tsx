@@ -192,6 +192,7 @@ export function StarField({
       ref={canvasRef}
       className={`${styles.canvasLayer} ${className || ''}`}
       aria-hidden="true"
+      tabIndex={-1}
     />
   );
 }

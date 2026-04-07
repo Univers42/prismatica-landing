@@ -55,3 +55,4 @@ export const useAuthUser = () => useAuthStore((state) => state.user);
 export const useAuthStatus = () => useAuthStore((state) => state.status);
 export const useAuthToken = () => useAuthStore((state) => state.token);
 export const useAuthActions = () => useAuthStore((state) => state.actions);
+export const useIsAuthenticated = () => useAuthStore((state) => state.status === 'AUTHENTICATED');

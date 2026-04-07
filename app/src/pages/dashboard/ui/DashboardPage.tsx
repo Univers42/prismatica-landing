@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { useAuthActions, useAuthUser, useAuthStatus } from '@/features/auth';
+import { useAuthUser, useAuthStatus, useLogout } from '@/features/auth';
 import styles from './DashboardPage.module.scss';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -130,8 +129,7 @@ function WidgetCard({ widget, index }: { widget: WidgetMeta; index: number }): R
  * Clean, focused, app-grade UI.
  */
 export function DashboardPage(): React.JSX.Element {
-  const navigate = useNavigate();
-  const { logout } = useAuthActions();
+  const logout = useLogout();
   const user = useAuthUser();
   const status = useAuthStatus();
   const [activeNav, setActiveNav] = useState<string>('overview');
@@ -140,8 +138,7 @@ export function DashboardPage(): React.JSX.Element {
 
   const handleLogout = useCallback(() => {
     logout();
-    navigate('/', { replace: true });
-  }, [logout, navigate]);
+  }, [logout]);
 
   const initials = user?.display_name
     ? user.display_name.split(' ').slice(0, 2).map((n) => n[0]).join('').toUpperCase()

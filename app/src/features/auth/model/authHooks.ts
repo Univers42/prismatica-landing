@@ -1,5 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { mockAuthService } from '@/features/auth/api/mockAuthService';
 import type { AuthProvider, AuthResponse } from '../api/mockAuthService';
 import { useAuthActions, useAuthToken } from './authStore';
@@ -54,3 +56,15 @@ export function useUser() {
     retry: 1,
   });
 }
+
+export function useLogout() {
+  const navigate = useNavigate();
+  const { logout } = useAuthActions();
+
+  return () => {
+    logout();
+    navigate('/', { replace: true });
+    toast.info('👋 You have been successfully signed out.');
+  };
+}
+

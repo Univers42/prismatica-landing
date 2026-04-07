@@ -5,7 +5,7 @@ license: Proprietary
 compatibility: React 18+, TypeScript 5+, WCAG 2.1. Designed for Gemini CLI.
 metadata:
   author: A11y Team
-  version: "1.0.0"
+  version: "2.0.0"
   tags: [accessibility, a11y, wcag, react, keyboard, screen-reader]
 ---
 
@@ -110,33 +110,65 @@ Apply these rules to every component you review. Always return the corrected JSX
   <h2>Subsection</h2>
   ```
 
+### 7. `aria-hidden` + Focusable (SonarQube S6825)
+- **Rule:** Any element with `aria-hidden="true"` must not be focusable via keyboard. Add `tabIndex={-1}` to explicitly remove it from the tab sequence.
+- **Why:** If a screen reader ignores an element (aria-hidden) but the keyboard focus lands on it, the user hears nothing and becomes disoriented ("black hole" focus).
+- **Example:**
+  ```tsx
+  // ❌ Violation – focusable canvas hidden from screen readers
+  <canvas aria-hidden="true" />
+  
+  // ✅ Compliant – explicitly non‑focusable
+  <canvas aria-hidden="true" tabIndex={-1} />
+  ```
+
+### 8. Prefer Native Button over `role="button"` (SonarQube S6819)
+- **Rule:** Do not use `role="button"` on `div`, `span`, or other non‑interactive elements. Use a real `<button>` instead. If a custom element is unavoidable, also add `tabIndex={0}` and keyboard handlers.
+- **Why:** Native `<button>` provides focus management, keyboard support (Enter/Space), and semantic meaning out of the box. Fake buttons require manual implementation and are often brittle.
+- **Anti‑pattern:**
+  ```tsx
+  // ❌ Violation – fake button
+  <div role="button" onClick={handleClick}>Click me</div>
+  ```
+- **Correct solution:**
+  ```tsx
+  // ✅ Compliant – native button
+  <button type="button" onClick={handleClick}>Click me</button>
+  ```
+- **Special case – backdrop button in modals:** Use a native `<button>` as the overlay click‑to‑close layer, with `tabIndex={-1}` so keyboard users don't land there (they already have Escape key). Example:
+  ```tsx
+  <div className="overlay">
+    <button
+      type="button"
+      className="backdropButton"
+      onClick={onClose}
+      aria-label="Close dialog"
+      tabIndex={-1}
+    />
+    <div role="dialog" aria-modal="true">
+      {/* modal content */}
+    </div>
+  </div>
+  ```
+
 ## Output Format
 
 When you audit a component, you must:
 
 1. **Show the original code** (or reference line numbers if large).
 2. **Provide the refactored code** with all necessary attributes, roles, and keyboard handlers.
-3. **Add a short explanation** (≤2 lines) stating which barrier was removed.
+3. **Add a short explanation** (≤2 lines) stating which barrier was removed and which SonarQube rule (S6825, S6819, etc.) is satisfied.
 
 **Example output:**
 
 ```
 **Original:**
-<div className="close-btn" onClick={closeModal}>X</div>
+<canvas ref={canvasRef} aria-hidden="true" />
 
 **Refactored:**
-<div
-  className="close-btn"
-  role="button"
-  tabIndex={0}
-  onClick={closeModal}
-  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && closeModal()}
-  aria-label="Close modal"
->
-  X
-</div>
+<canvas ref={canvasRef} aria-hidden="true" tabIndex={-1} />
 
-**Explanation:** Added role, tabIndex, keyboard handler, and aria-label to make the close button keyboard-accessible and screen‑reader friendly.
+**Explanation:** Added tabIndex={-1} (S6825) to prevent keyboard focus on an aria-hidden canvas – removes the "black hole" focus risk.
 ```
 
 If no violations are found, simply state: *"Component already meets WCAG 2.1 accessibility standards."*
