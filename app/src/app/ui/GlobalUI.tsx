@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { LightCursor, ScrollProgress, StarField } from '@/shared/ui';
 
@@ -9,26 +10,36 @@ export interface GlobalUIProps {
   readonly scrollProgress: number;
 }
 
+// Routes that use the immersive landing experience
+const LANDING_ROUTES: readonly string[] = ['/', '/login'];
+
 /**
  * 🌌 Global UI Layer
- * 
- * Orchestrates visual elements that exist globally and independently 
+ *
+ * Orchestrates visual elements that exist globally and independently
  * of the core document flow or route structure.
- * 
- * @param {GlobalUIProps} props - Synchronization streams for ambient reactivity
+ *
+ * Landing-only effects (StarField, LightCursor, ScrollProgress) are
+ * suppressed on dashboard/app routes so the workspace feels clean.
  */
 export function GlobalUI({ mousePos, scrollProgress }: GlobalUIProps): React.JSX.Element {
+  const { pathname } = useLocation();
+  const isLandingRoute = LANDING_ROUTES.includes(pathname);
+
   return (
     <>
-      {/* Immersive background & cursor tracking */}
-      <StarField mousePos={mousePos} scrollProgress={scrollProgress} />
-      <LightCursor pos={mousePos} scrollProgress={scrollProgress} />
-      
-      {/* Global Reading/Scroll indicator */}
-      <ScrollProgress progress={scrollProgress} />
-      
-      {/* Toast notifications (Flash messages, Success, Errors) */}
+      {/* Immersive background & cursor — landing experience only */}
+      {isLandingRoute && (
+        <>
+          <StarField mousePos={mousePos} scrollProgress={scrollProgress} />
+          <LightCursor pos={mousePos} scrollProgress={scrollProgress} />
+          <ScrollProgress progress={scrollProgress} />
+        </>
+      )}
+
+      {/* Toast notifications — always available */}
       <Toaster position="top-center" richColors />
     </>
   );
 }
+

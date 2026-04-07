@@ -4,9 +4,11 @@ import { useMousePosition } from '@/shared/lib/hooks/useMousePosition';
 import { useScrollProgress } from '@/shared/lib/hooks/useScrollProgress';
 
 // Fragmented Structural Layers
+import { BrowserRouter as Router } from 'react-router-dom';
 import { AppProviders } from './providers/AppProviders';
 import { GlobalUI } from './ui/GlobalUI';
 import { AppRouter } from './router/AppRouter';
+
 
 /**
  * 💠 Prismatica Orchestrator (App.tsx)
@@ -30,13 +32,16 @@ function App(): React.JSX.Element {
 
   return (
     <AppProviders>
-      {/* Visual background layers & toasts isolated from DOM routing */}
-      <GlobalUI mousePos={mousePos} scrollProgress={scrollProgress} />
-      
-      {/* Route traversal and lazy-loading boundaries */}
-      <AppRouter mousePos={mousePos} scrollProgress={scrollProgress} />
+      <Router>
+        {/* Visual background layers & toasts isolated from DOM routing */}
+        <GlobalUI mousePos={mousePos} scrollProgress={scrollProgress} />
+        
+        {/* Route traversal and lazy-loading boundaries */}
+        <AppRouter mousePos={mousePos} scrollProgress={scrollProgress} />
+      </Router>
     </AppProviders>
   );
+
 }
 
 export default App;

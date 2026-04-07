@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+
 import { LoadingFallback } from '@/shared/ui';
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -25,27 +26,26 @@ export interface AppRouterProps {
  */
 export function AppRouter({ mousePos, scrollProgress }: AppRouterProps): React.JSX.Element {
   return (
-    <Router>
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route 
-            path="/" 
-            element={<LandingPage scrollProgress={scrollProgress} mousePos={mousePos} />} 
-          />
-          <Route 
-            path="/login" 
-            element={<LoginPage mousePos={mousePos} />} 
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Suspense>
-    </Router>
+    <Suspense fallback={<LoadingFallback />}>
+      <Routes>
+        <Route 
+          path="/" 
+          element={<LandingPage scrollProgress={scrollProgress} mousePos={mousePos} />} 
+        />
+        <Route 
+          path="/login" 
+          element={<LoginPage mousePos={mousePos} />} 
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 }
+

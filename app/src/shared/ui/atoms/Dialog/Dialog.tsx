@@ -38,30 +38,18 @@ export function Dialog({ open, onClose, title, size = 'md', children }: DialogPr
     };
   }, [open, handleKeyDown]);
 
-  // Unified backdrop logic (closes when clicking/pressing Enter/Space outside the content)
-  const handleBackdropAction = useCallback(
-    (e: ReactMouseEvent | ReactKeyboardEvent) => {
-      // For keyboard, only trigger on Enter or Space
-      if ('key' in e && e.key !== 'Enter' && e.key !== ' ') return;
-
-      if (contentRef.current && !contentRef.current.contains(e.target as Node)) {
-        onClose();
-      }
-    },
-    [onClose],
-  );
-
   if (!open) return null;
 
-  return (
-    <div 
-      className={styles.overlay} 
-      onClick={handleBackdropAction}
-      onKeyDown={handleBackdropAction}
-      role="button"
-      tabIndex={-1}
-      aria-label="Close dialog overlay"
-    >
+return (
+    <div className={styles.overlay}>
+      <button 
+        type="button"
+        className={styles.backdropButton}
+        onClick={onClose}
+        aria-label="Close dialog"
+        tabIndex={-1}
+      />
+
       <div
         ref={contentRef}
         className={`${styles.dialog} ${styles[size]}`}
@@ -76,6 +64,7 @@ export function Dialog({ open, onClose, title, size = 'md', children }: DialogPr
             </h3>
           )}
           <button
+            type="button"
             className={styles.close}
             onClick={onClose}
             aria-label="Close dialog"
