@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { m } from 'framer-motion';
 
 // FSD Models
 import type { LoginPageProps } from '../model/types';
 
 // Features (FSD layer below Pages)
-import { AuthForm } from '@/features/auth';
+import { AuthForm, useAuthStatus } from '@/features/auth';
 
 // Presentation Styles
 import styles from './Login.module.scss';
@@ -17,6 +17,13 @@ import styles from './Login.module.scss';
  * Uses global interactions (mousePos) from the App Orchestrator.
  */
 export function LoginPage({ mousePos }: LoginPageProps): React.JSX.Element {
+  const status = useAuthStatus();
+
+  // If already authenticated (post-login or restored session), go straight to dashboard
+  if (status === 'AUTHENTICATED') {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <div className={styles.loginPage}>
       {/* 

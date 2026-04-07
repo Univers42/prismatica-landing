@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Mail, Lock, User, ArrowRight, ShieldCheck, LogOut, CheckCircle2 } from 'lucide-react';
+import { Mail, Lock, User, ArrowRight, ShieldCheck } from 'lucide-react';
 import { GlassCard } from '@/shared/ui/glass-card';
 import { useLogin } from '@/features/auth/model/authHooks';
 import { useAuthStatus, useAuthUser, useAuthActions } from '@/features/auth/model/authStore';
 import type { AuthProvider } from '../api/mockAuthService';
 import styles from './AuthForm.module.scss';
+
 
 export function AuthForm(): React.JSX.Element {
   const [isLogin, setIsLogin] = useState(true);
@@ -70,22 +71,7 @@ export function AuthForm(): React.JSX.Element {
     );
   }
 
-  // 2. Authenticated View
-  if (status === 'AUTHENTICATED') {
-    return (
-      <GlassCard className={styles.authCard}>
-        <div className={styles.header}>
-          <CheckCircle2 className={styles.mfaIcon} size={48} color="#22c55e" style={{ margin: '0 auto 1rem' }} />
-          <h2 className={styles.title}>Welcome Back</h2>
-          <p className={styles.subtitle}>You are successfully authenticated as <strong>{user?.email}</strong>.</p>
-        </div>
-        <button onClick={logout} className={styles.submitButton} style={{ background: '#ef4444' }}>
-          <LogOut size={18} />
-          <span>Sign Out</span>
-        </button>
-      </GlassCard>
-    );
-  }
+  // 2. Authenticated → redirect handled by LoginPage (FSD: Page layer owns navigation)
 
   return (
     <div className={styles.authContainer}>

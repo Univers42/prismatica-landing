@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { User } from '../api/mockAuthService';
 
-export type AuthStatus = 'IDLE' | 'LOADING' | 'AUTHENTICATED' | 'AWAITING_MFA' | 'ERROR';
+export type AuthStatus = 'IDLE' | 'CHECKING' | 'LOADING' | 'AUTHENTICATED' | 'AWAITING_MFA' | 'ERROR';
 
 interface AuthState {
   user: User | null;
@@ -16,13 +16,19 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  status: 'IDLE',
+  status: 'CHECKING', // Start in CHECKING so ProtectedRoute knows init is in progress
   token: null,
   actions: {
     initialize: () => {
+      set({ status: 'CHECKING' });
       const savedToken = localStorage.getItem('prisma_auth_token');
       if (savedToken) {
-        set({ token: savedToken });
+        // Token found: restore session optimistically.
+        // The useUser() TanStack Query hook will validate it async.
+        set({ token: savedToken, status: 'AUTHENTICATED' });
+      } else {
+        // No token: confirmed not authenticated.
+        set({ status: 'IDLE' });
       }
     },
     loginState: (user, token, requiresMfa) => {

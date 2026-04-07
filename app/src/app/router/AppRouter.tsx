@@ -1,12 +1,14 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LoadingFallback } from '@/shared/ui';
+import { ProtectedRoute } from './ProtectedRoute';
 
 // Code-Splitted Pages
 // Instead of bundling all pages together, Vite will create separate JS chunks
-// for LandingPage and LoginPage, significantly decreasing initial load time.
+// for each page, significantly decreasing initial load time.
 const LandingPage = lazy(() => import('@/pages/landing').then(m => ({ default: m.LandingPage })));
 const LoginPage = lazy(() => import('@/pages/login').then(m => ({ default: m.LoginPage })));
+const DashboardPage = lazy(() => import('@/pages/dashboard').then(m => ({ default: m.DashboardPage })));
 
 export interface AppRouterProps {
   /** Environmental mouse position passed down to the Landing experience */
@@ -33,6 +35,14 @@ export function AppRouter({ mousePos, scrollProgress }: AppRouterProps): React.J
           <Route 
             path="/login" 
             element={<LoginPage mousePos={mousePos} />} 
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </Suspense>
