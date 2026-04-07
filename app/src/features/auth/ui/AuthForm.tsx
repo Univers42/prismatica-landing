@@ -52,6 +52,7 @@ export function AuthForm(): React.JSX.Element {
               value={otp}
               onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
               required 
+              autoComplete="one-time-code"
               style={{ textAlign: 'center', letterSpacing: '0.5em', fontSize: '1.2rem' }}
             />
           </div>
@@ -134,18 +135,23 @@ export function AuthForm(): React.JSX.Element {
             {!isLogin && (
               <div className={styles.inputGroup}>
                 <User className={styles.inputIcon} size={18} />
-                <input type="text" placeholder="Full Name" required />
+                <input type="text" placeholder="Full Name" required autoComplete="name" />
               </div>
             )}
             
             <div className={styles.inputGroup}>
               <Mail className={styles.inputIcon} size={18} />
-              <input type="email" placeholder="Email Address" required />
+              <input type="email" placeholder="Email Address" required autoComplete="email" />
             </div>
 
             <div className={styles.inputGroup}>
               <Lock className={styles.inputIcon} size={18} />
-              <input type="password" placeholder="Password" required />
+              <input 
+                type="password" 
+                placeholder="Password" 
+                required 
+                autoComplete={isLogin ? "current-password" : "new-password"} 
+              />
             </div>
 
             {isLogin && (
