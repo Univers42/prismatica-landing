@@ -20,15 +20,15 @@ import { AppRouter } from './router/AppRouter';
  */
 function App(): React.JSX.Element {
   // 1. Bootstrapping Logic initialization (e.g., checking active sessions)
-  const { initialize } = useAuthActions();
+  const { initializeSupabase } = useAuthActions();
   
   // 2. Global Environmental State
   const mousePos = useMousePosition();
   const scrollProgress = useScrollProgress();
 
   useEffect(() => {
-    initialize();
-  }, [initialize]);
+    initializeSupabase();
+  }, [initializeSupabase]);
 
   return (
     <AppProviders>

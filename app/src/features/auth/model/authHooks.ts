@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-import { mockAuthService } from '@/features/auth/api/mockAuthService';
-import type { AuthProvider, AuthResponse } from '../api/mockAuthService';
-import { useAuthActions, useAuthToken } from './authStore';
+import { supabaseAuthService } from '../api/supabaseAuthService';
+import type { AuthProvider } from '../api/mockAuthService'; // Reusing the type, or we could copy it
+import { useAuthActions, useAuthUser } from './authStore';
 
 // query keys
 export const AUTH_KEYS = {
@@ -12,30 +12,13 @@ export const AUTH_KEYS = {
 };
 
 export function useLogin() {
-  const queryClient = useQueryClient();
-  const { loginState } = useAuthActions();
-
-  return useMutation<AuthResponse, Error, AuthProvider>({
-    mutationFn: (provider) => mockAuthService.loginWithOAuth(provider),
-    onSuccess: (data) => {
-      // 1. Update the Zustand store
-      loginState(data.user, data.token, data.requiresMfa);
-      
-      // 2. Pre-populate the user cache
-      queryClient.setQueryData(AUTH_KEYS.user, data.user);
-
-      // 3. Visual feedback
-      if (data.requiresMfa) {
-        toast.info('🔐 2-Factor Authentication Required', {
-          description: `Please enter the code sent to your device associated with ${data.user.email}`
-        });
-      } else {
-        toast.success(`🚀 Welcome back, ${data.user.display_name || data.user.username}!`, {
-          description: 'Login successful. Access granted to the spectrum.'
-        });
-      }
+  return useMutation<void, Error, AuthProvider>({
+    mutationFn: async (provider) => {
+      toast.loading('Redirecting to secure provider...', { id: 'oauth-redirect' });
+      await supabaseAuthService.signInWithOAuth(provider);
     },
     onError: (error) => {
+      toast.dismiss('oauth-redirect');
       toast.error('❌ Authentication Failed', {
         description: error.message
       });
@@ -43,18 +26,39 @@ export function useLogin() {
   });
 }
 
-export function useUser() {
-  const token = useAuthToken();
+export function useEmailLogin() {
+  const navigate = useNavigate();
 
-  return useQuery({
-    queryKey: AUTH_KEYS.user,
-    queryFn: () => {
-      if (!token) throw new Error('No token found');
-      return mockAuthService.getUserSession(token);
+  return useMutation<any, Error, { email: string; password: string }>({
+    mutationFn: async ({ email, password }) => {
+      return supabaseAuthService.signInWithEmail(email, password);
     },
-    enabled: !!token, // Only fetch if we have a token from localStorage/Store
-    retry: 1,
+    onSuccess: (data) => {
+      const name = data.user?.user_metadata?.full_name || data.user?.email;
+      toast.success(`🚀 Welcome back, ${name}!`, {
+        description: 'Manual login successful. Accessing workspace...'
+      });
+      navigate('/dashboard', { replace: true });
+    },
+    onError: (error) => {
+      toast.error('❌ Login Failed', {
+        description: error.message
+      });
+    }
   });
+}
+
+export function useUser() {
+  const user = useAuthUser();
+  // Returning it wrapped in a similar query shape if needed, 
+  // but since we are using Zustand now as the single source of truth,
+  // we can just return a fake query result or simply use `useAuthUser` directly in components.
+  // We'll keep this hook for compatibility with any existing components.
+  return {
+    data: user,
+    isLoading: false,
+    error: null
+  };
 }
 
 export function useLogout() {

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import { useAuthUser, useAuthStatus, useLogout } from '@/features/auth';
 import styles from './DashboardPage.module.scss';
 
@@ -133,12 +134,22 @@ export function DashboardPage(): React.JSX.Element {
   const user = useAuthUser();
   const status = useAuthStatus();
   const [activeNav, setActiveNav] = useState<string>('overview');
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const isLoading = status === 'CHECKING' || status === 'LOADING';
 
+  const toggleSidebar = useCallback(() => {
+    setIsSidebarOpen(prev => !prev);
+  }, []);
+
+  const closeSidebar = useCallback(() => {
+    setIsSidebarOpen(false);
+  }, []);
+
   const handleLogout = useCallback(() => {
+    closeSidebar();
     logout();
-  }, [logout]);
+  }, [logout, closeSidebar]);
 
   const initials = user?.display_name
     ? user.display_name.split(' ').slice(0, 2).map((n) => n[0]).join('').toUpperCase()
@@ -147,10 +158,23 @@ export function DashboardPage(): React.JSX.Element {
   const displayName = user?.display_name ?? user?.username ?? 'User';
 
   return (
-    <div className={styles.layout}>
+    <div className={`${styles.layout} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
+      {/* ── Backdrop (Mobile only) ── */}
+      <AnimatePresence>
+        {isSidebarOpen && (
+          <m.div 
+            className={styles.backdrop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeSidebar}
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
 
       {/* ── Sidebar ── */}
-      <aside className={styles.sidebar} aria-label="Main navigation">
+      <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarActive : ''}`} aria-label="Main navigation">
         {/* Brand */}
         <div className={styles.sidebarBrand}>
           <div className={styles.brandMark} aria-hidden="true">P</div>
@@ -164,7 +188,10 @@ export function DashboardPage(): React.JSX.Element {
               key={item.id}
               id={`nav-${item.id}`}
               className={`${styles.navItem} ${activeNav === item.id ? styles.navItemActive : ''}`}
-              onClick={() => setActiveNav(item.id)}
+              onClick={() => {
+                setActiveNav(item.id);
+                closeSidebar();
+              }}
               aria-current={activeNav === item.id ? 'page' : undefined}
             >
               <span className={styles.navIcon} aria-hidden="true">{item.icon}</span>
@@ -200,6 +227,16 @@ export function DashboardPage(): React.JSX.Element {
         {/* Topbar */}
         <header className={styles.topbar}>
           <div className={styles.topbarLeft}>
+            {/* Mobile Menu Btn */}
+            <button 
+              className={styles.mobileMenuBtn}
+              onClick={toggleSidebar}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isSidebarOpen}
+            >
+              {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+
             <h1 className={styles.pageTitle}>Overview</h1>
             <span className={styles.pageBreadcrumb}>Workspace</span>
           </div>

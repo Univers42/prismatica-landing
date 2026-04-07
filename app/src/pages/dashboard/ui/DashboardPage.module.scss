@@ -27,6 +27,24 @@
   color: var(--dash-text-primary);
   font-family: 'Inter', 'Outfit', system-ui, sans-serif;
   cursor: default; // ← normal cursor; overrides any global custom cursor
+  overflow-x: hidden;
+}
+
+.sidebarOpen {
+  @media (max-width: 767px) {
+    overflow: hidden;
+  }
+}
+
+// ── Backdrop (Mobile Overlay) ──────────────────────────────────────────────────
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 45;
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -42,9 +60,19 @@
   flex-direction: column;
   z-index: 50;
 
-  // Hidden on mobile — toggled via hamburger in Phase 2
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+
+  // Sliding behavior on mobile
   @media (max-width: 767px) {
-    display: none;
+    transform: translateX(-100%);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.sidebarActive {
+  @media (max-width: 767px) {
+    transform: translateX(0);
   }
 }
 
@@ -245,8 +273,31 @@
 
 .topbarLeft {
   display: flex;
-  align-items: baseline;
-  gap: 0.625rem;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.mobileMenuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--dash-border);
+  background: var(--dash-surface);
+  color: var(--dash-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:active {
+    scale: 0.95;
+    background: var(--dash-surface-hover);
+  }
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 }
 
 .pageTitle {

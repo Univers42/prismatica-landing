@@ -13,9 +13,10 @@ Prismatica Landing está construida con un enfoque en el rendimiento extremo, un
 - **Styling**: [Sass (SCSS)](https://sass-lang.com/) + [CSS Modules](https://github.com/css-modules/css-modules)
 - **Animations**: [Framer Motion 12](https://www.framer.com/motion/)
 - **State Management**: [Zustand](https://zustand-demo.pmnd.rs/) (Client) + [TanStack Query 5](https://tanstack.com/query/latest) (Server)
-- **Auth**: OAuth 2.0 (Google, GitHub, 42) + Multi-Factor Authentication (MFA)
-- **Data Fetching**: [TanStack Query 5](https://tanstack.com/query/latest) (Server State Management)
+- **Auth**: Real-time Authentication via [Supabase](https://supabase.com/) (Google, GitHub, Email/Password)
+- **Data Fetching**: [TanStack Query 5](https://tanstack.com/query/latest) (Server State Management) 
 - **Icons**: [Lucide React](https://lucide.dev/)
+- **Infrastructure**: [Zustand](https://zustand-demo.pmnd.rs/) (Reactive Session Hub)
 
 ---
 
@@ -24,12 +25,12 @@ Prismatica Landing está construida con un enfoque en el rendimiento extremo, un
 El proyecto sigue una fusión de **Feature-Sliced Design (FSD)** y **Atomic Design**, garantizando una separación clara de responsabilidades y una alta reusabilidad.
 
 ### Capas del Proyecto
-1.  **App**: Configuración global, proveedores y estilos base (en proceso de migración a `src/app`).
-2.  **Pages**: Composición de la página `landing`.
-3.  **Widgets**: Secciones complejas e independientes (ej. `HeroSection`, `Navbar`, `AnimatedPrism`).
-4.  **Features**: Lógica de interacción y autenticación (OAuth 2.0). 
-5.  **Entities**: Modelos de usuario y esquemas de sesión.
-6.  **Shared**: Componentes UI atómicos, utilidades y librerías externas.
+1.  **App**: Configuración global, proveedores y estilos base.
+2.  **Pages**: Landing interactiva y el nuevo **Dashboard Workspace**.
+3.  **Widgets**: Secciones complejas e independientes (ej. `HeroSection`, `Sidebar`, `WidgetGrid`).
+4.  **Features**: Lógica de interacción, autenticación de Supabase y navegación móvil. 
+5.  **Entities**: Modelos de usuario y esquemas de sesión protegidos.
+6.  **Shared**: Componentes UI atómicos, utilidades (ej. `GlassCard`) y librerías externas.
 
 ### Reglas de Importación
 - **Strict Downward Imports**: Una capa solo puede importar de capas inferiores.
@@ -40,14 +41,16 @@ El proyecto sigue una fusión de **Feature-Sliced Design (FSD)** y **Atomic Desi
 
 ## 🗺️ Roadmap y Estado del Proyecto
 
-Basado en la revisión general definida en [ROADMAP.md](./ROADMAP.md):
+Basado en la revisión general definida en [ROADMAP.md](./docs/ROADMAP.md):
 
 ### 🛠️ Tareas de Arquitectura Completadas
-- [x] Optimización total de Assets: Pipeline local con **vite-plugin-image-optimizer** (Reducción de ~66%).
-- [x] **Code-Splitting** y Lazy Loading estructural de componentes pesados (Mejora de FCP).
-- [x] Migración a **LazyMotion** (Framer Motion) para optimización de bundle inicial.
+- [x] Optimización total de Assets: Pipeline local con **vite-plugin-image-optimizer**.
+- [x] **Code-Splitting** y Lazy Loading estructural de componentes pesados.
 - [x] Migración total a arquitectura **FSD (Feature-Sliced Design)**.
-- [x] Centralización de lógica en **Shared Hooks** (ej. `useMousePosition`).
+- [x] **Dashboard Workspace Infrastructure**: Separación visual y lógica del área de usuario.
+- [x] **Real-time Auth Integration**: Conexión con Supabase y manejo reactivo de sesiones.
+- [x] **Mobile Navigation Hub**: Sistema de sidebar deslizante y menú hamburger responsivo.
+- [x] **Zero-Error Build Strategy**: Confirmación de build local limpia sin avisos de TypeScript.
 
 ---
 

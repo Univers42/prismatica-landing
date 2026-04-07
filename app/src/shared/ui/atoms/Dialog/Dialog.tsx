@@ -2,9 +2,7 @@ import {
   useEffect, 
   useCallback, 
   useRef, 
-  type ReactNode, 
-  type MouseEvent as ReactMouseEvent, 
-  type KeyboardEvent as ReactKeyboardEvent 
+  type ReactNode,
 } from 'react';
 import styles from './Dialog.module.scss';
 

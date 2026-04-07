@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, ArrowRight, ShieldCheck } from 'lucide-react';
 import { GlassCard } from '@/shared/ui/glass-card';
-import { useLogin } from '@/features/auth/model/authHooks';
+import { useLogin, useEmailLogin } from '@/features/auth/model/authHooks';
 import { useAuthStatus, useAuthUser, useAuthActions } from '@/features/auth/model/authStore';
 import type { AuthProvider } from '../api/mockAuthService';
 import styles from './AuthForm.module.scss';
@@ -14,12 +14,20 @@ export function AuthForm(): React.JSX.Element {
   const user = useAuthUser();
   const { loginState, logout } = useAuthActions();
   const loginMutation = useLogin();
+  const emailLoginMutation = useEmailLogin();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
 
   const toggleMode = () => setIsLogin(!isLogin);
 
   const handleOAuthLogin = (provider: AuthProvider) => {
     loginMutation.mutate(provider);
+  };
+
+  const handleManualSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    emailLoginMutation.mutate({ email, password });
   };
 
   const handleVerifyMfa = (e: React.FormEvent) => {
@@ -131,7 +139,7 @@ export function AuthForm(): React.JSX.Element {
             <span>or continue with email</span>
           </div>
 
-          <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
+          <form className={styles.form} onSubmit={handleManualSubmit}>
             {!isLogin && (
               <div className={styles.inputGroup}>
                 <User className={styles.inputIcon} size={18} />
@@ -141,7 +149,14 @@ export function AuthForm(): React.JSX.Element {
             
             <div className={styles.inputGroup}>
               <Mail className={styles.inputIcon} size={18} />
-              <input type="email" placeholder="Email Address" required autoComplete="email" />
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                required 
+                autoComplete="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
 
             <div className={styles.inputGroup}>
@@ -151,6 +166,8 @@ export function AuthForm(): React.JSX.Element {
                 placeholder="Password" 
                 required 
                 autoComplete={isLogin ? "current-password" : "new-password"} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
@@ -160,8 +177,16 @@ export function AuthForm(): React.JSX.Element {
               </div>
             )}
 
-            <button type="submit" className={styles.submitButton}>
-              <span>{isLogin ? 'Sign In' : 'Get Started'}</span>
+            <button 
+              type="submit" 
+              className={styles.submitButton}
+              disabled={emailLoginMutation.isPending}
+            >
+              <span>
+                {emailLoginMutation.isPending 
+                  ? 'Verifying...' 
+                  : (isLogin ? 'Sign In' : 'Get Started')}
+              </span>
               <ArrowRight size={18} />
             </button>
           </form>

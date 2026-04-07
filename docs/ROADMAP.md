@@ -1,49 +1,38 @@
-# Prismatica Landing Roadmap
+# Prismatica Product Roadmap
 
-Este documento resume la arquitectura actual de **Prismatica Landing** y define los pasos para alcanzar la visión técnica del proyecto, incluyendo mejoras críticas de rendimiento.
-
-## 🏗️ Resumen de Arquitectura Actual
-
-El proyecto está en una fase de transición hacia una estructura **FSD (Feature-Sliced Design)** estricta combinada con **Atomic Design**.
-
-### Estado de Capas (FSD)
-- ✅ **App**: Raíz de la aplicación organizada en `src/app`.
-- ✅ **Pages**: Configuración de `landing` y `login` completas.
-- ✅ **Widgets**: Secciones complejas (`hero`, `galaxy`, `navbar`, etc.) refactorizadas.
-- ✅ **Features / Entities**: Lógica de autenticación centralizada en Zustand.
-- ✅ **Shared**: UI atómica, hooks globales y utilidades consolidadas.
-
-### Stack Tecnológico
-- **Core**: React 19 + Vite 8 + TypeScript 5.9.
-- **Styling**: SCSS + CSS Modules (Zero Tailwind).
-- **State**: Zustand (Global) + TanStack Query (Server).
-- **Animations**: Framer Motion 12.
+> *Note: This roadmap is a living document and will be updated as the platform evolves.*
 
 ---
 
-## ⚡ 3 Mejoras de Rendimiento Sugeridas
-
-Para mantener la experiencia "Premium" y "State of the Art" de Prismatica, se proponen las siguientes optimizaciones técnicas:
-
-### ✅ 1. Implementación de `LazyMotion` (Framer Motion)
-Migración exitosa a `LazyMotion` y el componente `m`, cargando solo `domAnimation`.
-- **Resultado**: Reducción del bundle inicial de JS en ~46kB y optimización del Time to Interactive (TTI).
-
-### ✅ 2. Code-Splitting a Nivel de Ruta y Componentes Pesados
-Implementación exitosa de `React.lazy()` y `<Suspense>` tanto a nivel de rutas como de secciones visuales pesadas.
-- **Resultado**: Separación del código en 'chunks' independientes, priorizando el contenido "Above the Fold" (Hero y Navbar), lo que reduce drásticamente el First Contentful Paint (FCP).
-
-### ✅ 3. Pipeline de Optimización de Assets Automático
-Integración de `vite-plugin-image-optimizer` y migración de assets externos (CDN) al sistema de archivos local para su compresión durante el pipeline de build.
-- **Resultado**: Reducción drástica del peso de los assets visuales clave (hasta un 66% de ahorro, ~771KB), minimizando el consumo de ancho de banda sin pérdida de calidad percibida.
+## 🟢 Phase 1: High-Performance Landing (COMPLETED)
+- [x] Core React 19 + Vite 8 Infrastructure.
+- [x] Glassmorphism Design System (Atomic Design).
+- [x] Asset Optimization Pipeline (~66% reduction).
+- [x] Motion Graphics Core (Framer Motion 12 / LazyMotion).
+- [x] Immersive Backgrounds (StarField).
 
 ---
 
-## 🗺️ Próximas Metas (Arquitectura & UX)
+## 🟡 Phase 2: User Workspace & Identity (IN PROGRESS)
+- [x] **Dashboard Infrastructure**: Professional workspace shell and layout separation.
+- [x] **Auth Sandbox (Supabase)**: Real authentication via GitHub, Google, and Email.
+- [x] **Reactive Session Management**: Zustand store integrated with Supabase listeners.
+- [x] **Mobile Experience**: Responsive topbar and sliding sidebar navigation.
+- [ ] **Profile Sync**: Automatic profile creation via SQL triggers.
+- [ ] **Secure Storage**: Encrypted user settings and preferences.
 
-1. **[En Progreso] Refactorización FSD Estricta**:
-    - ✅ **Capa App**: Fragmentación completada (Proveedores, UI Global, Router).
-    - ✅ **Capa Pages**: Extracción completada (Modelos, Lógica, CSS Modules).
-    - ⏳ **Capa Widgets**: (Siguiente paso). Resolver advertencias de linter (ej: `HeroSection` useEffect states) y asegurar que cumplen la estricta encapsulación FSD (ui/model/lib).
-2. **Interactividad Avanzada**: Refinar comportamientos de `StarField` y `GalaxySection` ante eventos de scroll profundos una vez limpios.
-3. **Integración de Backend Real**: Sustituir mocks (`mockAuthService`) por enrutamiento final al backend en la capa Features.
+---
+
+## 🟣 Phase 3: Polymorphic Core (UPCOMING)
+- [ ] **Schema Designer**: Visual interface for dynamic schema creation.
+- [ ] **View Engine**: Strategy patterns for diverse data visualizations.
+- [ ] **Adapter Marketplace**: Pre-built connections for common data sources.
+- [ ] **Collaborative Workspace**: Multi-user editing and auditing.
+
+---
+
+## 🏗️ Architectural Mandates (Self-Check)
+1. **FSD Compliance**: App, Pages, Widgets, Features, Entities, Shared layer isolation.
+2. **Atomic Design**: Atomic-to-Organism component hierarchy.
+3. **Zero-Error Build**: Strict TypeScript type safety and linting.
+4. **Performance First**: Lazy loading and optimized rendering for a 60fps experience.
